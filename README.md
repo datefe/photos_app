@@ -3,7 +3,7 @@
 Backend architecture of an app for photos upload.
 Arquitectura de backend para una app de subida de fotos.
 
-Entities
+Entities / Entidades
 
 - users
 - users profile
@@ -12,4 +12,4 @@ Entities
 - likes
 - comments
 
-Endpoints
+Endpoints / Rutas
