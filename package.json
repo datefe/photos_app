@@ -1,0 +1,22 @@
+{
+  "name": "photos-app",
+  "version": "1.0.0",
+  "description": "backend de una aplicación de photos / backend of a photos' app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.14.0",
+    "faker": "^5.5.3",
+    "prettier": "^2.6.2"
+  },
+  "dependencies": {
+    "date-fns": "^2.28.0",
+    "dotenv": "^16.0.0",
+    "lodash": "^4.17.21",
+    "mysql2": "^2.3.3"
+  }
+}
