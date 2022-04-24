@@ -1,9 +1,9 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const faker = require('faker/locale/es');
-const { getConnection } = require('./db');
-const { formatDateToDB } = require('../helpers');
-const { random } = require('lodash');
+const faker = require("faker/locale/es");
+const { getConnection } = require("./db");
+const { formatDateToDB } = require("../helpers");
+const { random } = require("lodash");
 
 async function main() {
   let connection;
@@ -12,17 +12,17 @@ async function main() {
     connection = await getConnection();
 
     // Removing (dropping) tables if they already exists (users, users_profile, posts, images, likes, comments)
-    console.log('Removing tables');
+    console.log("Removing tables / Eliminando tablas");
 
-    await connection.query('DROP TABLE IF EXISTS likes');
-    await connection.query('DROP TABLE IF EXISTS comments');
-    await connection.query('DROP TABLE IF EXISTS images');
-    await connection.query('DROP TABLE IF EXISTS posts');
-    await connection.query('DROP TABLE IF EXISTS usersProfile');
-    await connection.query('DROP TABLE IF EXISTS users');
+    await connection.query("DROP TABLE IF EXISTS likes");
+    await connection.query("DROP TABLE IF EXISTS comments");
+    await connection.query("DROP TABLE IF EXISTS images");
+    await connection.query("DROP TABLE IF EXISTS posts");
+    await connection.query("DROP TABLE IF EXISTS usersProfile");
+    await connection.query("DROP TABLE IF EXISTS users");
 
     // Creating the tables
-    console.log('Creating tables');
+    console.log("Creating tables / Creando tablas");
 
     await connection.query(`
       CREATE TABLE users (
@@ -102,7 +102,9 @@ async function main() {
 
     // Adding template data
 
-    console.log('Users table: creating Admin user');
+    console.log(
+      "Users table: creating Admin user / Tabla users: creando usuario Admin"
+    );
 
     await connection.query(
       `
@@ -111,7 +113,9 @@ async function main() {
     `
     );
 
-    console.log('Users table: adding sample data');
+    console.log(
+      "Adding sample data to Users table / Añadiendo datos de prueba a la tabla de Users"
+    );
     const users = 10;
 
     for (let index = 0; index < users; index++) {
@@ -128,7 +132,7 @@ async function main() {
     }
 
     console.log(
-      'Adding sample data to usersProfile / Añadiendo datos de prueba a usersProfile'
+      "Adding sample data to usersProfile table / Añadiendo datos de prueba a la tabla de usersProfile"
     );
 
     const usersProfile = 11;
@@ -151,7 +155,7 @@ async function main() {
     }
 
     console.log(
-      'Adding sample data to posts / Añadiendo datos de prueba a post'
+      "Adding sample data to Posts table / Añadiendo datos de prueba a la tabla de Posts"
     );
 
     const posts = 10;
@@ -173,7 +177,7 @@ async function main() {
     }
 
     console.log(
-      'Adding sample data to Comments table / Añadiendo datos de prueba a la tabla de Comments'
+      "Adding sample data to Comments table / Añadiendo datos de prueba a la tabla de Comments"
     );
     const comments = 20;
 
@@ -191,7 +195,7 @@ async function main() {
       `);
     }
     console.log(
-      'Adding sample data to Likes table / Añadiendo datos de prueba a la tabla de Likes'
+      "Adding sample data to Likes table / Añadiendo datos de prueba a la tabla de Likes"
     );
     const likes = 80;
 
@@ -209,7 +213,7 @@ async function main() {
     }
 
     console.log(
-      'Adding sample data to Images table / Añadiendo datos de prueba a la tabla de Images'
+      "Adding sample data to Images table / Añadiendo datos de prueba a la tabla de Images"
     );
     const images = 15;
 
@@ -229,7 +233,7 @@ async function main() {
   } catch (error) {
     console.error(error);
   } finally {
-    console.log('All done, releasing connection');
+    console.log("All done, releasing connection");
     if (connection) connection.release();
     process.exit();
   }
