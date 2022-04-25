@@ -35,6 +35,10 @@ app.get("/comments/:idPost", getCommentsByPost);
 app.get("/comments/:idUser", getCommmentsByUser);
 app.delete("/comment", deleteComment);
 
+//Middleware isUser
+
+app.use(isUser);
+
 //Middleware 404
 
 app.use((req, res) => {
