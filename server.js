@@ -3,41 +3,51 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 
+//POSTS Controllers
+
+const newPost = require("./2-controllers/posts/newPost");
+const getPostsLatest = require("./2-controllers/posts/getPostsLatest");
+const getPostById = require("./2-controllers/posts/getPostById");
+const getPostByTxt = require("./2-controllers/posts/getPostByTxt");
+const getPostUser = require("./2-controllers/posts/getPostUser");
+
 const app = express();
 
+app.use(express.json());
 app.use(morgan("dev"));
 
 //Endpoints / Rutas
 
 //USERS
-app.post("/user", newUser);
-app.get("/users", getUsers);
-app.get("/user/:id", getUserById);
-app.put("/user/modify/:id", putUser);
-app.post("/user/login", login);
-app.delete("/user/delete", deleteUser);
+// app.post("/user", newUser);
+// app.get("/users", getUsers);
+// app.get("/user/:id", getUserById);
+// app.put("/user/modify/:id", putUser);
+// app.post("/user/login", login);
+// app.delete("/user/delete", deleteUser);
 
 //POSTS
 app.post("/post", newPost);
+app.get("/posts", getPostsLatest);
 app.get("/post/:id", getPostById);
 app.get("post/:txt", getPostByTxt);
 app.get("/post/user/:id", getPostUser);
 
-//LIKES
-app.get("/likes/:idPost", getLikesByPost);
-app.get("/likes/:idUser", getLikesByUser);
-app.post("/like", newLike);
-app.delete("/like", deleteLike);
+// //LIKES
+// app.get("/likes/:idPost", getLikesByPost);
+// app.get("/likes/:idUser", getLikesByUser);
+// app.post("/like", newLike);
+// app.delete("/like", deleteLike);
 
-//COMMENTS
-app.post("/comment/:idPost", newComment);
-app.get("/comments/:idPost", getCommentsByPost);
-app.get("/comments/:idUser", getCommmentsByUser);
-app.delete("/comment", deleteComment);
+// //COMMENTS
+// app.post("/comment/:idPost", newComment);
+// app.get("/comments/:idPost", getCommentsByPost);
+// app.get("/comments/:idUser", getCommmentsByUser);
+// app.delete("/comment", deleteComment);
 
 //Middleware isUser
 
-app.use(isUser);
+// app.use(isUser);
 
 //Middleware 404
 
