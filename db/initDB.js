@@ -1,9 +1,9 @@
-require("dotenv").config();
+require('dotenv').config();
 
-const faker = require("faker/locale/es");
-const { getConnection } = require("./db");
-const { formatDateToDB } = require("../helpers");
-const { random } = require("lodash");
+const faker = require('faker/locale/es');
+const { getConnection } = require('./db');
+const { formatDateToDB } = require('../helpers');
+const { random } = require('lodash');
 
 async function main() {
   let connection;
@@ -12,55 +12,63 @@ async function main() {
     connection = await getConnection();
 
     // Removing (dropping) tables if they already exists (users, users_profile, posts, images, likes, comments)
-    console.log("Removing tables / Eliminando tablas");
+    console.log('Removing tables / Eliminando tablas');
 
-    await connection.query("DROP TABLE IF EXISTS likes");
-    await connection.query("DROP TABLE IF EXISTS comments");
-    await connection.query("DROP TABLE IF EXISTS images");
-    await connection.query("DROP TABLE IF EXISTS posts");
-    await connection.query("DROP TABLE IF EXISTS usersProfile");
-    await connection.query("DROP TABLE IF EXISTS users");
+    await connection.query('DROP TABLE IF EXISTS likes');
+    await connection.query('DROP TABLE IF EXISTS comments');
+    await connection.query('DROP TABLE IF EXISTS images');
+    await connection.query('DROP TABLE IF EXISTS posts');
+    await connection.query('DROP TABLE IF EXISTS usersProfile');
+    await connection.query('DROP TABLE IF EXISTS users');
 
     // Creating the tables
-    console.log("Creating tables / Creando tablas");
+    console.log('Creating tables / Creando tablas');
+
+    // registrationcode tipo de  dato
+    // name,surname utilizar varchar
+    // contar con la codificacion de la contraseña
 
     await connection.query(`
       CREATE TABLE users (
         id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         dateCreation DATETIME NOT NULL,
         dateLastLogIn DATETIME NOT NULL,
-        registrationCode TINYTEXT,
+        registrationCode TINYTEXT,  
         name TINYTEXT,
         surname TINYTEXT,
         email VARCHAR(100) UNIQUE NOT NULL,
         password TINYTEXT NOT NULL,
+        userName TINYTEXT NOT NULL,
+        image TINYTEXT,
+        intro VARCHAR(250) DEFAULT NULL,
         role ENUM("normal", "admin") DEFAULT "normal" NOT NULL,       
         active BOOLEAN DEFAULT false        
       );
     `);
 
-    await connection.query(`
+    /*  await connection.query(`
       CREATE TABLE usersProfile (
         id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         user_id INTEGER UNSIGNED,
         dateLastUpdate DATETIME NOT NULL,
-        username TINYTEXT NOT NULL,
+        userName TINYTEXT NOT NULL,
         image TINYTEXT,
         intro VARCHAR(250) DEFAULT NULL,
         FOREIGN KEY (user_id) REFERENCES users(id)
       );
-    `);
+    `); */
+
+    // decidir entre tittle y desciption
 
     await connection.query(`
       CREATE TABLE posts (
         id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        usersProfile_id INTEGER UNSIGNED NOT NULL,
+        users_id INTEGER UNSIGNED NOT NULL,
         dateCreation DATETIME NOT NULL,
         title VARCHAR(100) NOT NULL,
-        description TEXT,
-        place VARCHAR(50) NOT NULL,
+        place VARCHAR(50) ,
         image VARCHAR(150),
-      FOREIGN KEY (usersProfile_id) REFERENCES usersProfile(id)
+      FOREIGN KEY (users_id) REFERENCES users(id)
       );
     `);
 
@@ -79,10 +87,10 @@ async function main() {
       CREATE TABLE likes (
         id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         post_id INTEGER UNSIGNED NOT NULL,
-        usersProfile_id INTEGER UNSIGNED NOT NULL,
+        users_id INTEGER UNSIGNED NOT NULL,
         dateCreation DATETIME NOT NULL,
         FOREIGN KEY (post_id) REFERENCES posts(id),
-        FOREIGN KEY (usersProfile_id) REFERENCES usersProfile(id)
+        FOREIGN KEY (users_id) REFERENCES users(id)
 
       );
     `);
@@ -91,11 +99,11 @@ async function main() {
       CREATE TABLE comments (
         id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         post_id INTEGER UNSIGNED NOT NULL,
-        usersProfile_id INTEGER UNSIGNED NOT NULL,
+        users_id INTEGER UNSIGNED NOT NULL,
         dateCreation DATETIME NOT NULL,
         comment VARCHAR(200) NOT NULL,
         FOREIGN KEY (post_id) REFERENCES posts(id),
-        FOREIGN KEY (usersProfile_id) REFERENCES usersProfile(id)
+        FOREIGN KEY (users_id) REFERENCES users(id)
 
       );
     `);
@@ -103,18 +111,18 @@ async function main() {
     // Adding template data
 
     console.log(
-      "Users table: creating Admin user / Tabla users: creando usuario Admin"
+      'Users table: creating Admin user / Tabla users: creando usuario Admin'
     );
 
     await connection.query(
       `
-      INSERT INTO users(dateCreation, dateLastLogin, name, surname, email, password, role, active)
-      VALUES(UTC_TIMESTAMP, UTC_TIMESTAMP, "Admin", "Surname", "admin@email.com", SHA2("${process.env.DEFAULT_ADMIN_PASSWORD}", 512), "admin", true)
+      INSERT INTO users(dateCreation, dateLastLogin, name, surname, email, password, userName, role, active)
+      VALUES(UTC_TIMESTAMP, UTC_TIMESTAMP, "Admin", "Surname", "admin@email.com", SHA2("${process.env.DEFAULT_ADMIN_PASSWORD}", 512), "admin", "admin", true)
     `
     );
 
     console.log(
-      "Adding sample data to Users table / Añadiendo datos de prueba a la tabla de Users"
+      'Adding sample data to Users table / Añadiendo datos de prueba a la tabla de Users'
     );
     const users = 10;
 
@@ -125,14 +133,14 @@ async function main() {
 
       await connection.query(
         `
-      INSERT INTO users(dateCreation, dateLastLogin, name, surname, email, password, role, active)
-      VALUES(UTC_TIMESTAMP, UTC_TIMESTAMP, "${name}", "${surname}", "${email}", SHA2("${faker.internet.password()}", 512), "normal", true)
+      INSERT INTO users(dateCreation, dateLastLogin, name, surname, email, password, userName, role, active)
+      VALUES(UTC_TIMESTAMP, UTC_TIMESTAMP, "${name}", "${surname}", "${email}", SHA2("${faker.internet.password()}", 512),  "${name}",  "normal", true)
       `
       );
     }
 
-    console.log(
-      "Adding sample data to usersProfile table / Añadiendo datos de prueba a la tabla de usersProfile"
+    /* console.log(
+      'Adding sample data to usersProfile table / Añadiendo datos de prueba a la tabla de usersProfile'
     );
 
     const usersProfile = 11;
@@ -152,10 +160,10 @@ async function main() {
       `);
 
       counter++;
-    }
+    } */
 
     console.log(
-      "Adding sample data to Posts table / Añadiendo datos de prueba a la tabla de Posts"
+      'Adding sample data to Posts table / Añadiendo datos de prueba a la tabla de Posts'
     );
 
     const posts = 10;
@@ -164,12 +172,11 @@ async function main() {
       const dateCreationPost = formatDateToDB(faker.date.recent());
 
       await connection.query(`
-        INSERT INTO posts(usersProfile_id, dateCreation, title, description, place, image)
+        INSERT INTO posts(users_id, dateCreation, title, place, image)
         VALUES(
           "${random(2, users + 1)}",
           "${dateCreationPost}",
           "${faker.lorem.words(3)}",
-          "${faker.lorem.paragraphs(2)}",
           "${faker.address.city()}",
           "${faker.image.avatar()}"         
           )
@@ -177,7 +184,7 @@ async function main() {
     }
 
     console.log(
-      "Adding sample data to Comments table / Añadiendo datos de prueba a la tabla de Comments"
+      'Adding sample data to Comments table / Añadiendo datos de prueba a la tabla de Comments'
     );
     const comments = 20;
 
@@ -185,7 +192,7 @@ async function main() {
       const dateCreationComment = formatDateToDB(faker.date.recent());
 
       await connection.query(`
-        INSERT INTO comments(post_id,usersProfile_id, dateCreation, comment)
+        INSERT INTO comments(post_id,users_id, dateCreation, comment)
         VALUES(
           "${random(2, users)}",
           "${random(2, users)}",
@@ -195,7 +202,7 @@ async function main() {
       `);
     }
     console.log(
-      "Adding sample data to Likes table / Añadiendo datos de prueba a la tabla de Likes"
+      'Adding sample data to Likes table / Añadiendo datos de prueba a la tabla de Likes'
     );
     const likes = 80;
 
@@ -203,7 +210,7 @@ async function main() {
       const dateCreationLikes = formatDateToDB(faker.date.recent());
 
       await connection.query(`
-        INSERT INTO likes(post_id,usersProfile_id, dateCreation)
+        INSERT INTO likes(post_id,users_id, dateCreation)
         VALUES(
           "${random(2, users)}",
           "${random(2, users)}",
@@ -213,7 +220,7 @@ async function main() {
     }
 
     console.log(
-      "Adding sample data to Images table / Añadiendo datos de prueba a la tabla de Images"
+      'Adding sample data to Images table / Añadiendo datos de prueba a la tabla de Images'
     );
     const images = 15;
 
@@ -233,7 +240,7 @@ async function main() {
   } catch (error) {
     console.error(error);
   } finally {
-    console.log("All done, releasing connection");
+    console.log('All done, releasing connection');
     if (connection) connection.release();
     process.exit();
   }
