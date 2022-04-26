@@ -11,6 +11,8 @@ const getPostById = require("./2-controllers/posts/getPostById");
 const getPostByTxt = require("./2-controllers/posts/getPostByTxt");
 const getPostUser = require("./2-controllers/posts/getPostUser");
 
+const newUser = require("./2-controllers/users/newUser");
+
 const app = express();
 
 app.use(express.json());
@@ -19,11 +21,11 @@ app.use(morgan("dev"));
 //Endpoints / Rutas
 
 //USERS
-// app.post("/user", newUser);
+app.post("/user", newUser);
+// app.post("/user/login", login);
 // app.get("/users", getUsers);
 // app.get("/user/:id", getUserById);
 // app.put("/user/modify/:id", putUser);
-// app.post("/user/login", login);
 // app.delete("/user/delete", deleteUser);
 
 //POSTS
@@ -61,7 +63,7 @@ app.use((req, res) => {
 //Middleware error handling / gestor de errores
 
 app.use((error, req, res, next) => {
-  console.error(error);
+  console.error(error.message);
   res.status(error.httpStatus || 500).send({
     status: "error",
     message: error.message,
