@@ -3,6 +3,11 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 
+const app = express();
+
+app.use(express.json());
+app.use(morgan("dev"));
+
 //POSTS Controllers
 
 const newPost = require("./2-controllers/posts/newPost");
@@ -11,19 +16,17 @@ const getPostById = require("./2-controllers/posts/getPostById");
 const getPostByTxt = require("./2-controllers/posts/getPostByTxt");
 const getPostUser = require("./2-controllers/posts/getPostUser");
 
+//USERS Controllers
+
 const newUser = require("./2-controllers/users/newUser");
-
-const app = express();
-
-app.use(express.json());
-app.use(morgan("dev"));
+const getUsers = require("./2-controllers/users/getUsers");
 
 //Endpoints / Rutas
 
 //USERS
 app.post("/user", newUser);
 // app.post("/user/login", login);
-// app.get("/users", getUsers);
+app.get("/users", getUsers);
 // app.get("/user/:id", getUserById);
 // app.put("/user/modify/:id", putUser);
 // app.delete("/user/delete", deleteUser);
