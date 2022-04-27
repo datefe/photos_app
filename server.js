@@ -21,6 +21,7 @@ const getPostUser = require("./2-controllers/posts/getPostUser");
 const newUser = require("./2-controllers/users/newUser");
 const getUsers = require("./2-controllers/users/getUsers");
 const deleteUser = require("./2-controllers/users/deleteUser");
+const getUserById = require("./2-controllers/users/getUserById");
 
 //Endpoints / Rutas
 
@@ -28,7 +29,7 @@ const deleteUser = require("./2-controllers/users/deleteUser");
 app.post("/user", newUser);
 // app.post("/user/login", login);
 app.get("/users", getUsers);
-// app.get("/user/:id", getUserById);
+app.get("/user/:id", getUserById);
 // app.put("/user/modify/:id", putUser);
 app.delete("/user/delete/:id", deleteUser);
 
@@ -38,6 +39,7 @@ app.get("/posts", getPostsLatest);
 app.get("/post/:id", getPostById);
 app.get("post/:txt", getPostByTxt);
 app.get("/post/user/:id", getPostUser);
+app.delete("/post/delete/:id");
 
 // //LIKES
 // app.get("/likes/:idPost", getLikesByPost);
