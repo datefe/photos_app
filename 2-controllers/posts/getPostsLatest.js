@@ -1,3 +1,5 @@
+const { generateError } = require("../../helpers");
+
 const getPostsLatest = async (req, res, next) => {
   try {
     res.send({
