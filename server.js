@@ -20,6 +20,7 @@ const getPostUser = require("./2-controllers/posts/getPostUser");
 
 const newUser = require("./2-controllers/users/newUser");
 const getUsers = require("./2-controllers/users/getUsers");
+const deleteUser = require("./2-controllers/users/deleteUser");
 
 //Endpoints / Rutas
 
@@ -29,7 +30,7 @@ app.post("/user", newUser);
 app.get("/users", getUsers);
 // app.get("/user/:id", getUserById);
 // app.put("/user/modify/:id", putUser);
-// app.delete("/user/delete", deleteUser);
+app.delete("/user/delete/:id", deleteUser);
 
 //POSTS
 app.post("/post", newPost);
