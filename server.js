@@ -8,6 +8,8 @@ const app = express();
 app.use(express.json());
 app.use(morgan("dev"));
 
+const isAdmin = require("./middlewares/isAdmin");
+
 //POSTS Controllers
 
 const newPost = require("./2-controllers/posts/newPost");
@@ -19,15 +21,15 @@ const getPostUser = require("./2-controllers/posts/getPostUser");
 //USERS Controllers
 
 const newUser = require("./2-controllers/users/newUser");
+const loginUser = require("./2-controllers/users/loginUser");
 const getUsers = require("./2-controllers/users/getUsers");
 const deleteUser = require("./2-controllers/users/deleteUser");
 const getUserById = require("./2-controllers/users/getUserById");
-
 //Endpoints / Rutas
 
 //USERS
 app.post("/user", newUser);
-// app.post("/user/login", login);
+app.post("/user/login", loginUser);
 app.get("/users", getUsers);
 app.get("/user/:id", getUserById);
 // app.put("/user/modify/:id", putUser);
