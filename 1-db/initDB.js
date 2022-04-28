@@ -42,7 +42,7 @@ async function main() {
         image TINYTEXT,
         intro VARCHAR(250) DEFAULT NULL,
         role ENUM("normal", "admin") DEFAULT "normal",       
-        active BOOLEAN DEFAULT false        
+        active BOOLEAN DEFAULT true        
       );
     `);
 
