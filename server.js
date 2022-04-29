@@ -33,8 +33,8 @@ const editUser = require("./2-controllers/users/editUser");
 //USERS
 app.post("/user", newUser);
 app.post("/user/login", loginUser);
-app.get("/users", getUsers);
-app.get("/user/:id", isUser, getUserById);
+app.get("/user", getUsers);
+app.get("/users/:id", isUser, getUserById);
 app.put("/user/modify/:id", isUser, editUser);
 app.delete("/user/delete/:id", isUser, deleteUser);
 
