@@ -1,6 +1,10 @@
 const { format } = require("date-fns");
 const crypto = require("crypto");
 const fs = require("fs").promises;
+const sharp = require("sharp");
+const path = require("path");
+
+const imageUploadPath = path.join(__dirname, process.env.UPLOADS_PROFILE);
 
 function formatDateToDB(date) {
   return format(new Date(date), "yyyy-MM-dd HH:mm:ss");
@@ -20,4 +24,32 @@ function generateError(message, code = 500) {
   return error;
 }
 
-module.exports = { formatDateToDB, generateError, randomString, deleteUpload };
+async function processAndSaveImageProfile(uploadedImage) {
+  try {
+    const isDir = await fs.lstat(imageUploadPath);
+    isDir.isDirectory();
+  } catch (error) {
+    await fs.mkdir(imageUploadPath, { recursive: true });
+    console.error("Creada carpeta de almacenamiento de imagenes de perfil");
+  }
+
+  const image = sharp(uploadedImage.data);
+  const imageInfo = await image.metadata();
+
+  if (imageInfo.width > 300) {
+    image.resize(300);
+  }
+
+  const imageFileName = uploadedImage.name;
+  await image.toFile(path.join(imageUploadPath, imageFileName));
+
+  return imageFileName;
+}
+
+module.exports = {
+  formatDateToDB,
+  generateError,
+  randomString,
+  deleteUpload,
+  processAndSaveImageProfile,
+};
