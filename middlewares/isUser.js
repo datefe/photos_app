@@ -31,7 +31,7 @@ async function isUser(req, res, next) {
     // que el usuario cambió su pass o email
     const [result] = await connection.query(
       `
-      SELECT lastAuthUpdate
+      SELECT dateLastLogIn
       FROM users
       WHERE id=?
     `,

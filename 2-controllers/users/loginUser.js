@@ -26,6 +26,15 @@ async function loginUser(req, res, next) {
         401
       );
     }
+    console.log(email);
+    const prueba = await connection.query(
+      `
+      UPDATE users
+      SET dateLastLogIn = (UTC_TIMESTAMP)
+      WHERE email = ?
+         `,
+      [email]
+    );
 
     // Generar token con información del usuario
     const tokenInfo = {
