@@ -67,7 +67,6 @@ async function main() {
         dateCreation DATETIME NOT NULL,
         title VARCHAR(100) NOT NULL,
         place VARCHAR(50) ,
-        image VARCHAR(150),
       FOREIGN KEY (users_id) REFERENCES users(id)
       );
     `);
@@ -76,8 +75,6 @@ async function main() {
       CREATE TABLE images (
         id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         post_id INTEGER UNSIGNED NOT NULL,
-        dateCreation DATETIME NOT NULL,
-        name TINYTEXT,
         path TINYTEXT NOT NULL,
         FOREIGN KEY (post_id) REFERENCES posts(id)
       );
@@ -172,13 +169,12 @@ async function main() {
       const dateCreationPost = formatDateToDB(faker.date.recent());
 
       await connection.query(`
-        INSERT INTO posts(users_id, dateCreation, title, place, image)
+        INSERT INTO posts(users_id, dateCreation, title, place)
         VALUES(
           "${random(2, users + 1)}",
           "${dateCreationPost}",
           "${faker.lorem.words(3)}",
-          "${faker.address.city()}",
-          "${faker.image.avatar()}"         
+          "${faker.address.city()}"   
           )
       `);
     }
@@ -228,11 +224,9 @@ async function main() {
       const dateCreationImages = formatDateToDB(faker.date.recent());
 
       await connection.query(`
-        INSERT INTO images(post_id,dateCreation,name,path)
+        INSERT INTO images(post_id,path)
         VALUES(
           "${random(2, users)}",
-          "${dateCreationImages}",
-          "${faker.lorem.words(1)}",
           "${faker.image.image()}"
           )
       `);
