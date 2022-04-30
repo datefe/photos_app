@@ -37,7 +37,7 @@ const editUser = async (req, res, next) => {
       surname = saveData[0].surname;
     }
     if (!userName) {
-      surname = saveData[0].userName;
+      userName = saveData[0].userName;
     }
     if (!intro) {
       intro = saveData[0].intro;

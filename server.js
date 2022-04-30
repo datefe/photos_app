@@ -24,7 +24,7 @@ const getPostUser = require("./2-controllers/posts/getPostUser");
 
 const newUser = require("./2-controllers/users/newUser");
 const loginUser = require("./2-controllers/users/loginUser");
-const getUsers = require("./2-controllers/users/getUsers");
+const getUser = require("./2-controllers/users/getUser");
 const deleteUser = require("./2-controllers/users/deleteUser");
 const getUserById = require("./2-controllers/users/getUserById");
 const editUser = require("./2-controllers/users/editUser");
@@ -33,13 +33,13 @@ const editUser = require("./2-controllers/users/editUser");
 //USERS
 app.post("/user", newUser);
 app.post("/user/login", loginUser);
-app.get("/user", getUsers);
+app.get("/user/:userName", getUser);
 app.get("/users/:id", isUser, getUserById);
 app.put("/user/modify/:id", isUser, editUser);
 app.delete("/user/delete/:id", isUser, deleteUser);
 
 //POSTS
-app.post("/post", newPost);
+app.post("/post", isUser, newPost);
 app.get("/posts", getPostsLatest);
 app.get("/post/:id", getPostById);
 app.get("post/:txt", getPostByTxt);

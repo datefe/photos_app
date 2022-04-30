@@ -10,11 +10,11 @@ async function getPostById(req, res, next) {
 
     const [result] = await connection.query(
       `
-      SELECT posts.*, AVG(likes.post_id) AS PostLikesAverage
+      SELECT posts.*, COUNT(likes.post_id) AS PostLikesAverage
       FROM posts
       LEFT JOIN likes
-      ON likes.post_id =posts.id
-      WHERE post.id=?
+      ON likes.post_id = posts.id
+      WHERE posts.id=?
     `,
       [id]
     );
@@ -23,7 +23,7 @@ async function getPostById(req, res, next) {
 
     const [images] = await connection.query(
       `
-      SELECT id, name
+      SELECT id, path
       FROM images
       WHERE post_id = ?
     `,

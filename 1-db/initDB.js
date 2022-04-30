@@ -38,7 +38,7 @@ async function main() {
         surname TINYTEXT ,
         email VARCHAR(100) UNIQUE NOT NULL,
         password TINYTEXT NOT NULL,
-        userName TINYTEXT ,
+        userName VARCHAR(25)  NOT NULL,
         image TINYTEXT,
         intro VARCHAR(250) DEFAULT NULL,
         role ENUM("normal", "admin") DEFAULT "normal",       
@@ -75,7 +75,7 @@ async function main() {
       CREATE TABLE images (
         id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         post_id INTEGER UNSIGNED NOT NULL,
-        path TINYTEXT NOT NULL,
+        path VARCHAR(1000) NOT NULL,
         FOREIGN KEY (post_id) REFERENCES posts(id)
       );
     `);

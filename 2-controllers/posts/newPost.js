@@ -1,41 +1,58 @@
 const { getConnection } = require("../../1-db/db");
-const { generateError } = require("../../helpers");
+const { generateError, proccesImagesPost } = require("../../helpers");
 
-const newPost = async (user_id, title, place = "") => {
+const newPost = async (req, res, next) => {
   let connection;
 
+  const { userName, title, place } = req.query;
+  const users_id = req.auth.id;
+
   try {
+    if (req.auth.userName !== userName) {
+      throw generateError("No tienes permisos para hacer ese post", 403);
+    }
     connection = await getConnection();
 
-    const [result] = await connection.query(
-      `
-    INSERT INTO POSTS (user_id, title, place)
-    VALUES (?,?,?)
-    
-    `,
-      [user_id, title, place]
-    );
+    if (req.files && Object.keys(req.files).length > 0) {
+      let i = 1;
+      for (const imageData of Object.entries(req.files).slice(0, 2)) {
+        try {
+          console.log(imageData[1]);
+          const pathImage = await proccesImagesPost(imageData[1]);
+          const [result] = await connection.query(
+            `
+          INSERT INTO posts (users_id, title, place, dateCreation)
+          VALUES (?,?,?,(UTC_TIMESTAMP))
+          
+          `,
+            [users_id, title, place]
+          );
 
-    return.result.insertId;
-
-    // if (!title || title.length > 100) {
-    //   throw generateError(
-    //     "Title cannot exceed 100 characters / El título no puede exceder los 100 caracteres"
-    //   );
-    // }
+          const [saveImage] = await connection.query(
+            `
+          INSERT INTO images (post_id , path)
+          VALUES (?,?)`,
+            [result.insertId, pathImage]
+          );
+        } catch (error) {
+          throw generateError(
+            "No se pudo procesar el post. Inténtalo de nuevo",
+            400
+          );
+        }
+        i++;
+      }
+    }
 
     res.send({
-      status: "error",
-      message: "Not ready yet",
+      status: "ok",
+      message: "post creado",
     });
   } catch (error) {
     next(error);
-  }
-
-  finally {
+  } finally {
     if (connection) connection.release();
   }
-
 };
 
 module.exports = newPost;

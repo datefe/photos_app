@@ -13,7 +13,7 @@ async function getPostsLatest(req, res, next) {
 
     // Proceso la dirección de orden
     const orderDirection =
-      (direction && direction.toLowerCase()) === "desc" ? "DESC" : "ASC";
+      (direction && direction.toLowerCase()) === "desc" ? "ASC" : "DESC";
 
     // Proceso el campo de orden
     let orderBy;
@@ -33,20 +33,20 @@ async function getPostsLatest(req, res, next) {
     if (search) {
       queryResults = await connection.query(
         `
-        SELECT posts.dateCreation AS "Post Date Creation", posts.title AS "Post Title", posts.place AS "Place", images.name AS "Image Name"
-        (SELECT AVG(likes.id) FROM likes WHERE likes.post_id=posts.id) AS "Likes Average"
+        SELECT posts.dateCreation AS "Post Date Creation", posts.title AS "Post Title", posts.place AS "Place", images.path AS "Image Path"
+        
         FROM posts
         INNER JOIN images on images.post_id = posts.id
-        WHERE posts.place LIKE ? OR posts.title LIKE ?
+        WHERE posts.place LIKE %?% OR posts.title LIKE %?%
         ORDER BY ${orderBy} ${orderDirection}
         `,
-        [`%${search}%`, `%${search}%`]
+        [search, search]
       );
     } else {
       queryResults = await connection.query(
         `
-        SELECT posts.dateCreation AS "Post Date Creation", posts.title AS "Post Title", posts.place AS "Place", images.name AS "Image Name"
-        (SELECT AVG(likes.id) FROM likes WHERE likes.post_id=posts.id) AS "Likes Average"
+        SELECT posts.dateCreation AS "Post Date Creation", posts.title AS "Post Title", posts.place AS "Place", images.path AS "Image Path"
+        
         FROM posts
         INNER JOIN images on images.post_id = posts.id
         ORDER BY ${orderBy} ${orderDirection}`
