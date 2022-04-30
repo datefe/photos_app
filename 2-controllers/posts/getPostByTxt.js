@@ -1,5 +1,3 @@
-const { generateError } = require("../../helpers");
-
 const getPostByTxt = async (req, res, next) => {
   try {
     res.send({

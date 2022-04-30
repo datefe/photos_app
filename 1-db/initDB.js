@@ -64,9 +64,9 @@ async function main() {
       CREATE TABLE posts (
         id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
         users_id INTEGER UNSIGNED NOT NULL,
-        dateCreation DATETIME NOT NULL,
+        dateCreation DATETIME DEFAULT CURRENT_TIMESTAMP,
         title VARCHAR(100) NOT NULL,
-        place VARCHAR(50) ,
+        place VARCHAR(50),
       FOREIGN KEY (users_id) REFERENCES users(id)
       );
     `);
