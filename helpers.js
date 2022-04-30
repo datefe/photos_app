@@ -1,10 +1,12 @@
 const { format } = require("date-fns");
 const crypto = require("crypto");
 const fs = require("fs").promises;
+const uuid = require("uuid");
 const sharp = require("sharp");
 const path = require("path");
 
 const imageUploadPath = path.join(__dirname, process.env.UPLOADS_PROFILE);
+const imagePathPost = path.join(__dirname, process.env.UPLOADS_POST);
 
 function formatDateToDB(date) {
   return format(new Date(date), "yyyy-MM-dd HH:mm:ss");
@@ -41,9 +43,33 @@ async function processAndSaveImageProfile(uploadedImage) {
   }
 
   const imageFileName = uploadedImage.name;
-  await image.toFile(path.join(imageUploadPath, imageFileName));
+  const imagePath = path.join(imageUploadPath, imageFileName);
+  await image.toFile(imagePath);
 
-  return imageFileName;
+  return imagePath;
+}
+
+async function proccesImagesPost(uploadedImage) {
+  try {
+    const isDir = await fs.lstat(imagePathPost);
+    isDir.isDirectory();
+  } catch (error) {
+    await fs.mkdir(imagePathPost, { recursive: true });
+    console.error("Creada carpeta de almacenamiento de posts");
+  }
+
+  const image = sharp(uploadedImage.data);
+  const imageInfo = await image.metadata();
+
+  if (imageInfo.width > 1000) {
+    image.resize(1000);
+  }
+
+  const imageFileName = `${uuid.v4()}${uploadedImage.name}`;
+  const imagePath = path.join(imagePathPost, imageFileName);
+  await image.toFile(imagePath);
+
+  return imagePath;
 }
 
 module.exports = {
@@ -52,4 +78,5 @@ module.exports = {
   randomString,
   deleteUpload,
   processAndSaveImageProfile,
+  proccesImagesPost,
 };
