@@ -1,0 +1,197 @@
+{
+	"info": {
+		"_postman_id": "09ae20a5-fd9e-4418-8932-5f46c7d1a5b4",
+		"name": "Photos_app calls for Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Crear nuevo usuario",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"prueba@gmail.com\",\n \"password\": \"prueba123\",\n \"userName\" : \"prueba\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ver perfil de un usuario con su galeria de fotos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/user/Isabel/?orderBy=likes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"Isabel",
+						""
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "Isabel",
+							"disabled": true
+						},
+						{
+							"key": "orderBy",
+							"value": "likes"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Borrar usuario",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/user/delete/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"delete",
+						"11"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"email\": \"prueba@gmail.com\",\n \"password\": \"prueba123\"  \n}"
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modificacion de datos de usuario",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInJvbGUiOiJub3JtYWwiLCJpYXQiOjE2NTExNzk0OTMsImV4cCI6MTY1Mzc3MTQ5M30._2qT3ZTFgjbMRFod_eyc7tgmWPwtGZc0x0JT_kpnbjw",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/home/martin/Descargas/academy-award-5504949_1920.jpg"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/user/modify/12/?userName=toñitowei",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"user",
+						"modify",
+						"12",
+						""
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "toñitowei"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "toggleLike",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInJvbGUiOiJub3JtYWwiLCJ1c2VyTmFtZSI6InBydWViYSIsImlhdCI6MTY1MTM1NzA3NiwiZXhwIjoxNjUzOTQ5MDc2fQ.eMdzhr2Mj3i--5yRiiPK3xwFK2Jt7dyT6I8K3iol0PI",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:3000/likes/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"likes",
+						"10"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
