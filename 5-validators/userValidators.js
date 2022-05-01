@@ -1,6 +1,8 @@
 const Joi = require("@hapi/joi");
 const { generateError } = require("../helpers");
 
+// Validations / Validaciones
+
 const newUserSchema = Joi.object().keys({
   email: Joi.string()
     .email()
