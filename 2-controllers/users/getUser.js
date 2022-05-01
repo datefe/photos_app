@@ -1,6 +1,8 @@
-const existUser = require("./existUser");
-const postList = require("./postList");
-const postImages = require("./postImages");
+const existUser = require("../../1-db/existUser");
+const postList = require("../../1-db/postList");
+const postLikes = require("../../1-db/postLikes");
+const postImages = require("../../1-db/postImages");
+
 const getUser = async (req, res, next) => {
   try {
     const { userName } = req.params;
@@ -18,11 +20,12 @@ const getUser = async (req, res, next) => {
 
       for (const post of list) {
         const images = await postImages(post.id);
-
+        const [{ likes }] = await postLikes(post.id);
         userData.posts.push({
           title: post.title,
           place: post.place,
           dateCreation: post.dateCreation,
+          likes: likes,
           images: images,
         });
       }

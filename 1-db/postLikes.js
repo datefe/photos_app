@@ -1,22 +1,18 @@
-const { getConnection } = require("../../1-db/db");
+const { getConnection } = require("./db");
 
-const postImage = async (id) => {
+const postLikes = async (id) => {
   let connection;
   try {
     connection = await getConnection();
 
     const [list] = await connection.query(
       `
-    SELECT id, path
-    FROM images 
+    SELECT COUNT(*) AS likes
+    FROM likes 
     WHERE post_id = ?;
     `,
       [id]
     );
-
-    if (list.length < 1) {
-      return "no hay imagenes ligadas al post";
-    }
 
     return list;
   } finally {
@@ -24,4 +20,4 @@ const postImage = async (id) => {
   }
 };
 
-module.exports = postImage;
+module.exports = postLikes;
