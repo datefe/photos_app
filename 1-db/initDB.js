@@ -35,7 +35,7 @@ async function main() {
         dateLastLogIn DATETIME,
         registrationCode TINYTEXT,  
         name VARCHAR(20) DEFAULT "Undefined",
-        surname TINYTEXT ,
+        surname VARCHAR(20) DEFAULT "Undefined",
         email VARCHAR(100) UNIQUE NOT NULL,
         password TINYTEXT NOT NULL,
         userName VARCHAR(25)  NOT NULL,

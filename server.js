@@ -42,7 +42,11 @@ const newComment = require("./2-controllers/comments/newComment");
 app.post("/user", newUser);
 app.post("/user/login", loginUser);
 app.get("/user/:userName", getUser);
-app.put("/user/modify/:id", isUser, editUser);
+
+app.put("/user/modify/:userName", isUser, editUser);
+
+
+
 app.delete("/user/delete/:id", isUser, deleteUser);
 
 //POSTS
