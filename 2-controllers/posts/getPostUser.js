@@ -10,33 +10,18 @@ async function getPostUser(req, res, next) {
 
     const [result] = await connection.query(
       `
-      SELECT posts.*, AVG(likes.post_id) AS PostLikesAverage
-      FROM posts
-      LEFT JOIN likes
-      ON likes.post_id =posts.id
-      WHERE post.id=?
+        SELECT posts.dateCreation AS "Post Date Creation", posts.title AS "Post Title", posts.place AS "Place", images.path AS "Image Path"       
+        FROM posts
+        INNER JOIN images on images.post_id = posts.id
+      WHERE posts.users_id=?
     `,
       [id]
     );
-
-    // Getting images from the post / Imagenes asociadas al post
-
-    const [images] = await connection.query(
-      `
-      SELECT id, name
-      FROM images
-      WHERE post_id = ?
-    `,
-      [id]
-    );
-
-    console.log(images);
 
     res.send({
       status: "ok",
       data: {
-        ...result[0],
-        images,
+        result,
       },
     });
   } catch (error) {

@@ -10,7 +10,7 @@ async function getPostById(req, res, next) {
 
     const [result] = await connection.query(
       `
-      SELECT posts.*, COUNT(likes.post_id) AS PostLikesAverage
+      SELECT posts.*, COUNT(likes.post_id) AS PostLikes
       FROM posts
       LEFT JOIN likes
       ON likes.post_id = posts.id

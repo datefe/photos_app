@@ -5,10 +5,7 @@ async function getPostsLatest(req, res, next) {
 
   try {
     connection = await getConnection();
-    // Sacamos las posibles opciones del querystring:
-    //  search: para listar solo las entradas que contengan su valor en place o description
-    //  order: para ordernar el listado por likes, place o date
-    //  direction: para la dirección de la ordenación desc o asc
+
     const { search, order, direction } = req.query;
 
     // Proceso la dirección de orden
@@ -18,8 +15,8 @@ async function getPostsLatest(req, res, next) {
     // Proceso el campo de orden
     let orderBy;
     switch (order) {
-      case "likes":
-        orderBy = "likes";
+      case "title":
+        orderBy = "title";
         break;
       case "place":
         orderBy = "place";
@@ -33,19 +30,21 @@ async function getPostsLatest(req, res, next) {
     if (search) {
       queryResults = await connection.query(
         `
-        SELECT posts.dateCreation AS "Post Date Creation", posts.title AS "Post Title", posts.place AS "Place", images.path AS "Image Path"
+        SELECT posts.dateCreation AS "Post Date Creation",  posts.title AS "Post Title",
+        posts.place AS "Place", images.path AS "Image Path"
         
         FROM posts
         INNER JOIN images on images.post_id = posts.id
-        WHERE posts.place LIKE %?% OR posts.title LIKE %?%
+        WHERE posts.place LIKE ? OR posts.title LIKE ?
         ORDER BY ${orderBy} ${orderDirection}
         `,
-        [search, search]
+        [`%${search}%`, `%${search}%`]
       );
     } else {
       queryResults = await connection.query(
         `
-        SELECT posts.dateCreation AS "Post Date Creation", posts.title AS "Post Title", posts.place AS "Place", images.path AS "Image Path"
+        SELECT posts.dateCreation AS "Post Date Creation", posts.title AS "Post Title",
+        posts.place AS "Place", images.path AS "Image Path"
         
         FROM posts
         INNER JOIN images on images.post_id = posts.id

@@ -17,7 +17,7 @@ const isUser = require("./middlewares/isUser");
 const newPost = require("./2-controllers/posts/newPost");
 const getPostsLatest = require("./2-controllers/posts/getPostsLatest");
 const getPostById = require("./2-controllers/posts/getPostById");
-const getPostByTxt = require("./2-controllers/posts/getPostByTxt");
+// const getPostByTxt = require("./2-controllers/posts/getPostByTxt");
 const getPostUser = require("./2-controllers/posts/getPostUser");
 
 //USERS Controllers
@@ -28,6 +28,7 @@ const getUser = require("./2-controllers/users/getUser");
 const deleteUser = require("./2-controllers/users/deleteUser");
 const getUserById = require("./2-controllers/users/getUserById");
 const editUser = require("./2-controllers/users/editUser");
+
 //Endpoints / Rutas
 
 //USERS
@@ -42,25 +43,14 @@ app.delete("/user/delete/:id", isUser, deleteUser);
 app.post("/post", isUser, newPost);
 app.get("/posts", getPostsLatest);
 app.get("/post/:id", getPostById);
-app.get("post/:txt", getPostByTxt);
 app.get("/post/user/:id", getPostUser);
 app.delete("/post/delete/:id");
 
 // //LIKES
 // app.get("/likes/:idPost", getLikesByPost);
 // app.get("/likes/:idUser", getLikesByUser);
-// app.post("/like", newLike);
-// app.delete("/like", deleteLike);
-
-// //COMMENTS
-// app.post("/comment/:idPost", newComment);
-// app.get("/comments/:idPost", getCommentsByPost);
-// app.get("/comments/:idUser", getCommmentsByUser);
-// app.delete("/comment", deleteComment);
-
-//Middleware isUser
-
-// app.use(isUser);
+// app.post("/like", newLikes);
+// app.delete("/like", deleteLikes);
 
 //Middleware 404
 
