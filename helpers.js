@@ -5,8 +5,8 @@ const uuid = require("uuid");
 const sharp = require("sharp");
 const path = require("path");
 
-// const imageUploadPath = path.join(__dirname, process.env.UPLOADS_PROFILE);
-// const imagePathPost = path.join(__dirname, process.env.UPLOADS_POST);
+const imageUploadPath = path.join(__dirname, process.env.UPLOADS_PROFILE);
+const imagePathPost = path.join(__dirname, process.env.UPLOADS_POST);
 
 function formatDateToDB(date) {
   return format(new Date(date), "yyyy-MM-dd HH:mm:ss");
@@ -17,7 +17,7 @@ function randomString(length = 20) {
 }
 
 async function deleteUpload(uploadedImage) {
-  await fs.unlink(path.join(imageUploadPath, uploadedImage));
+  await fs.unlink(path.join(uploadedImage));
 }
 
 function generateError(message, code = 500) {
@@ -34,7 +34,6 @@ async function processAndSaveImageProfile(uploadedImage) {
     await fs.mkdir(imageUploadPath, { recursive: true });
     console.error("Creada carpeta de almacenamiento de imagenes de perfil");
   }
-
   const image = sharp(uploadedImage.data);
   const imageInfo = await image.metadata();
 

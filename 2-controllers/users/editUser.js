@@ -1,4 +1,7 @@
-const { getConnection } = require("../../1-db/db");
+const newUserAvailable = require("../../1-db/newUserAvailable");
+const updateUserData = require("../../1-db/updateUserData");
+const existUser = require("../../1-db/existUser");
+const updateProfileImage = require("../../1-db/updateProfileImage");
 const {
   generateError,
   processAndSaveImageProfile,
@@ -6,51 +9,35 @@ const {
 } = require("../../helpers");
 
 const editUser = async (req, res, next) => {
-  let connection;
-
   try {
-    connection = await getConnection();
+    const { userName } = req.params;
+    let { email, name, newUserName, surname, intro } = req.query;
 
-    const { id } = req.params;
-    let { email, name, surname, userName, intro } = req.query;
-
-    if (req.auth.id !== Number(id) && req.auth.role !== "admin") {
+    if (req.auth.userName !== userName && req.auth.role !== "admin") {
       throw generateError("No tienes permisos para editar este usuario", 403);
     }
 
-    const [saveData] = await connection.query(
-      `
-        SELECT *
-        FROM users 
-        WHERE id = ?
-        `,
-      [id]
-    );
+    const [saveData] = await existUser(userName);
 
     if (!email) {
-      email = saveData[0].email;
+      email = saveData.email;
     }
     if (!name) {
-      name = saveData[0].name;
+      name = saveData.name;
     }
     if (!surname) {
-      surname = saveData[0].surname;
-    }
-    if (!userName) {
-      userName = saveData[0].userName;
+      surname = saveData.surname;
     }
     if (!intro) {
-      intro = saveData[0].intro;
+      intro = saveData.intro;
     }
-
-    const [result] = await connection.query(
-      `
-      UPDATE users
-      SET  email= ?, name = ?, surname = ?, userName = ?, intro = ?
-      WHERE id = ?
-      `,
-      [email, name, surname, userName, intro, id]
-    );
+    if (!newUserName) {
+      newUserName = userName;
+    } else {
+      //comprobar que el newUserName esté disponible
+      await newUserAvailable(newUserName);
+    }
+    await updateUserData(email, name, newUserName, surname, intro, userName);
 
     if (req.files && Object.keys(req.files).length > 0) {
       const { image } = req.files;
@@ -58,16 +45,10 @@ const editUser = async (req, res, next) => {
       try {
         const processedImage = await processAndSaveImageProfile(image);
 
-        await connection.query(
-          `
-            UPDATE users
-            SET  image = ?
-            WHERE id = ?
-            `,
-          [processedImage, id]
-        );
-        if (saveData[0].image) {
-          deleteUpload(saveData[0].image);
+        await updateProfileImage(processedImage, req.auth.id);
+
+        if (saveData.image && saveData.image !== processedImage) {
+          await deleteUpload(saveData.image);
         }
       } catch (error) {
         throw generateError(
@@ -78,12 +59,10 @@ const editUser = async (req, res, next) => {
     }
     res.send({
       status: "ok",
-      message: result,
+      message: "result",
     });
   } catch (error) {
     next(error);
-  } finally {
-    if (connection) connection.release();
   }
 };
 
