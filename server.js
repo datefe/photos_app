@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const fileUpload = require("express-fileupload");
+
 const app = express();
 
 app.use(express.json());
@@ -17,7 +18,6 @@ const isUser = require("./middlewares/isUser");
 const newPost = require("./2-controllers/posts/newPost");
 const getPostsLatest = require("./2-controllers/posts/getPostsLatest");
 const getPostById = require("./2-controllers/posts/getPostById");
-const getPostByTxt = require("./2-controllers/posts/getPostByTxt");
 const getPostUser = require("./2-controllers/posts/getPostUser");
 
 //USERS Controllers
@@ -32,26 +32,35 @@ const editUser = require("./2-controllers/users/editUser");
 
 const toggleLikes = require("./2-controllers/likes/likes");
 
+//COMMENTS Controller
+
+const newComment = require("./2-controllers/comments/newComment");
+
 //Endpoints / Rutas
 
 //USERS
 app.post("/user", newUser);
 app.post("/user/login", loginUser);
 app.get("/user/:userName", getUser);
+
 app.put("/user/modify/:userName", isUser, editUser);
+
+
+
 app.delete("/user/delete/:id", isUser, deleteUser);
 
 //POSTS
 app.post("/post", isUser, newPost);
 app.get("/posts", getPostsLatest);
-app.get("/posts:text", getPostByTxt);
 app.get("/post/:id", getPostById);
 app.get("/post/user/:id", getPostUser);
 app.delete("/post/delete/:id");
 
-// //LIKES
-
+//LIKES
 app.get("/likes/:postId", isUser, toggleLikes);
+
+//COMMENTS
+app.post("/comment", isUser, newComment);
 
 //Middleware 404
 

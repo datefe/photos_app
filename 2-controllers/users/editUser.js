@@ -8,10 +8,19 @@ const {
   deleteUpload,
 } = require("../../helpers");
 
+const { editUserSchema } = require("../../5-validators/userValidators");
+
 const editUser = async (req, res, next) => {
   try {
+
     const { userName } = req.params;
     let { email, name, newUserName, surname, intro } = req.query;
+
+    
+    await editUserSchema.validateAsync(req.body);
+
+   
+
 
     if (req.auth.userName !== userName && req.auth.role !== "admin") {
       throw generateError("No tienes permisos para editar este usuario", 403);

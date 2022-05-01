@@ -3,10 +3,13 @@ const jsonwebtoken = require("jsonwebtoken");
 
 const { generateError } = require("../../helpers");
 
+const { loginUserSchema } = require("../../5-validators/userValidators");
+
 async function loginUser(req, res, next) {
   let connection;
   try {
     connection = await getConnection();
+    await loginUserSchema.validateAsync(req.body);
 
     const { email, password } = req.body;
 
