@@ -5,11 +5,14 @@ const {
   deleteUpload,
 } = require("../../helpers");
 
+const { editUserSchema } = require("../../5-validators/userValidators");
+
 const editUser = async (req, res, next) => {
   let connection;
 
   try {
     connection = await getConnection();
+    await editUserSchema.validateAsync(req.body);
 
     const { id } = req.params;
     let { email, name, surname, userName, intro } = req.query;

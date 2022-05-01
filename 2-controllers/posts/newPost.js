@@ -1,5 +1,6 @@
 const { getConnection } = require("../../1-db/db");
 const { generateError, proccesImagesPost } = require("../../helpers");
+const { newPostSchema } = require("../../5-validators/postValidators");
 
 const newPost = async (req, res, next) => {
   let connection;
@@ -12,6 +13,8 @@ const newPost = async (req, res, next) => {
       throw generateError("No tienes permisos para hacer ese post", 403);
     }
     connection = await getConnection();
+
+    await newPostSchema.validateAsync(req.body);
 
     if (req.files && Object.keys(req.files).length > 0) {
       let i = 1;

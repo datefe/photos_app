@@ -46,20 +46,6 @@ async function main() {
       );
     `);
 
-    /*  await connection.query(`
-      CREATE TABLE usersProfile (
-        id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
-        user_id INTEGER UNSIGNED,
-        dateLastUpdate DATETIME NOT NULL,
-        userName TINYTEXT NOT NULL,
-        image TINYTEXT,
-        intro VARCHAR(250) DEFAULT NULL,
-        FOREIGN KEY (user_id) REFERENCES users(id)
-      );
-    `); */
-
-    // decidir entre tittle y desciption
-
     await connection.query(`
       CREATE TABLE posts (
         id INTEGER UNSIGNED PRIMARY KEY AUTO_INCREMENT,
@@ -135,29 +121,6 @@ async function main() {
       `
       );
     }
-
-    /* console.log(
-      'Adding sample data to usersProfile table / Añadiendo datos de prueba a la tabla de usersProfile'
-    );
-
-    const usersProfile = 11;
-    let counter = 1;
-
-    for (let index = 0; index < usersProfile; index++) {
-      const dateLastUpdate = formatDateToDB(faker.date.recent());
-
-      await connection.query(`
-        INSERT INTO usersProfile(user_id, dateLastUpdate, username, intro)
-        VALUES(
-          "${counter}",
-          "${dateLastUpdate}",
-          "${faker.name.firstName()}",
-          "${faker.lorem.sentence(5)}"         
-          )
-      `);
-
-      counter++;
-    } */
 
     console.log(
       "Adding sample data to Posts table / Añadiendo datos de prueba a la tabla de Posts"

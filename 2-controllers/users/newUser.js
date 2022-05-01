@@ -1,11 +1,14 @@
 const { getConnection } = require("../../1-db/db");
 const { randomString, generateError } = require("../../helpers");
+const { newUserSchema } = require("../../5-validators/userValidators");
 
 const newUser = async (req, res, next) => {
   let connection;
 
   try {
     connection = await getConnection();
+
+    await newUserSchema.validateAsync(req.body);
 
     const { email, password, userName } = req.body;
 
