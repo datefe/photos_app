@@ -1,4 +1,4 @@
-const { getConnection } = require("../../1-db/db");
+const { getConnection } = require("./db");
 
 const postList = async (id) => {
   let connection;
