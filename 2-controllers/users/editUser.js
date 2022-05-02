@@ -2,6 +2,7 @@ const newUserAvailable = require("../../1-db/newUserAvailable");
 const updateUserData = require("../../1-db/updateUserData");
 const existUser = require("../../1-db/existUser");
 const updateProfileImage = require("../../1-db/updateProfileImage");
+const jsonwebtoken = require("jsonwebtoken");
 const {
   generateError,
   processAndSaveImageProfile,
