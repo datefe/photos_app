@@ -184,8 +184,6 @@ async function main() {
     const images = 15;
 
     for (let index = 0; index < images; index++) {
-      const dateCreationImages = formatDateToDB(faker.date.recent());
-
       await connection.query(`
         INSERT INTO images(post_id,path)
         VALUES(

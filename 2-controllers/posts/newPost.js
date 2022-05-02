@@ -14,7 +14,7 @@ const newPost = async (req, res, next) => {
     }
     connection = await getConnection();
 
-    await newPostSchema.validateAsync(req.body);
+    await newPostSchema.validateAsync(req.query);
 
     if (req.files && Object.keys(req.files).length > 0) {
       let i = 1;

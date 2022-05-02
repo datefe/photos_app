@@ -10,7 +10,7 @@ const newUser = async (req, res, next) => {
 
     const { email, password, userName } = req.body;
 
-    /* await newUserSchema.validateAsync(req.body); */
+    await newUserSchema.validateAsync(req.body);
 
     const [existingUser] = await connection.query(
       `

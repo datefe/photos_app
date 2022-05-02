@@ -22,6 +22,15 @@ const newUserSchema = Joi.object().keys({
         400
       )
     ),
+  userName: Joi.string()
+    .max(25)
+    .required()
+    .error(
+      generateError(
+        "El campo nombre de usuario no puede tener más de 25 caracteres y es obligatorio / The userName field can't have more than 25 characters and must have a value",
+        400
+      )
+    ),
 });
 
 const loginUserSchema = newUserSchema;
@@ -32,6 +41,15 @@ const editUserSchema = Joi.object().keys({
     .error(
       generateError(
         "Dirección de correo no valida / Please introduce a valid email address",
+        400
+      )
+    ),
+  userName: Joi.string()
+    .max(25)
+    .required()
+    .error(
+      generateError(
+        "El campo nombre de usuario no puede tener más de 25 caracteres y es obligatorio / The userName field can't have more than 25 characters and must have a value",
         400
       )
     ),

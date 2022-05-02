@@ -1,19 +1,21 @@
 const { getConnection } = require("../../1-db/db");
-const { newCommentSchema } = require("../../5-validators/postValidators");
+const { newCommentSchema } = require("../../5-validators/commentValidators");
 
 async function newComment(req, res, next) {
   let connection;
   try {
     connection = await getConnection();
 
-    await newCommentSchema.validateAsync(req.body);
+    console.log(req.auth.id);
 
     const { post_id, comment } = req.body;
 
+    await newCommentSchema.validateAsync(req.body);
+
     const [result] = await connection.query(
       `
-      INSERT INTO comments(post_id, comment, dateCreation, user_id)
-      VALUES(?,?,UTC_TIMESTAMP, ?)
+      INSERT INTO comments(post_id, comment, dateCreation, users_id)
+      VALUES(?,?,(UTC_TIMESTAMP), ?)
       `,
       [post_id, comment, req.auth.id]
     );

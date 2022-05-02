@@ -16,14 +16,8 @@ const newCommentSchema = Joi.object().keys({
     ),
   post_id: Joi.number()
     .min(1)
-    .max(5)
     .required()
-    .error(
-      generateError(
-        "El campo post_id debe existir y tener un valor entre 1 y 5 (incluídos)",
-        400
-      )
-    ),
+    .error(generateError("Valor minimo es 1 / Minimum value is 1", 400)),
 });
 
 module.exports = {
