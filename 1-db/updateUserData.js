@@ -1,5 +1,4 @@
 const { getConnection } = require("./db");
-const { generateError } = require("../helpers");
 
 const updateUser = async (
   email,

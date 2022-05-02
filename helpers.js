@@ -26,7 +26,7 @@ function generateError(message, code = 500) {
   return error;
 }
 
-async function processAndSaveImageProfile(uploadedImage) {
+async function processAndSaveImageProfile(uploadedImage, id) {
   try {
     const isDir = await fs.lstat(imageUploadPath);
     isDir.isDirectory();
@@ -41,7 +41,7 @@ async function processAndSaveImageProfile(uploadedImage) {
     image.resize(300);
   }
 
-  const imageFileName = uploadedImage.name;
+  const imageFileName = `${id}${uploadedImage.name}`;
   const imagePath = path.join(imageUploadPath, imageFileName);
   await image.toFile(imagePath);
 

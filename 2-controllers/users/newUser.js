@@ -8,9 +8,9 @@ const newUser = async (req, res, next) => {
   try {
     connection = await getConnection();
 
-    await newUserSchema.validateAsync(req.body);
-
     const { email, password, userName } = req.body;
+
+    /* await newUserSchema.validateAsync(req.body); */
 
     const [existingUser] = await connection.query(
       `
