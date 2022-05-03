@@ -5,7 +5,7 @@ const likeExist = async (userId, postId) => {
   let connection;
   try {
     connection = await getConnection();
-    console.log(userId);
+
     const [exist] = await connection.query(
       `
         SELECT id
@@ -14,7 +14,7 @@ const likeExist = async (userId, postId) => {
         `,
       [userId, postId]
     );
-    console.log(exist);
+
     if (exist.length < 1) {
       const [exist] = await connection.query(
         `

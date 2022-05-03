@@ -21,12 +21,19 @@ const getPostById = require("./2-controllers/posts/getPostById");
 const getPostUser = require("./2-controllers/posts/getPostUser");
 
 //USERS Controllers
+const {
+  newUser,
+  loginUser,
+  getUser,
+  deleteUser,
+  editUser,
+} = require("./2-controllers/users");
 
-const newUser = require("./2-controllers/users/newUser");
-const loginUser = require("./2-controllers/users/loginUser");
-const getUser = require("./2-controllers/users/getUser");
-const deleteUser = require("./2-controllers/users/deleteUser");
-const editUser = require("./2-controllers/users/editUser");
+// const newUser = require("./2-controllers/users/newUser");
+// const loginUser = require("./2-controllers/users/loginUser");
+// const getUser = require("./2-controllers/users/getUser");
+// const deleteUser = require("./2-controllers/users/deleteUser");
+// const editUser = require("./2-controllers/users/editUser");
 
 //LIKES Controller
 

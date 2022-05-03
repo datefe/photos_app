@@ -1,6 +1,6 @@
 const { getConnection } = require("../../1-db/db");
 const jsonwebtoken = require("jsonwebtoken");
-
+const updateLastLogin = require("../../1-db/updateLastLogin");
 const { generateError } = require("../../helpers");
 
 const { loginUserSchema } = require("../../5-validators/userValidators");
@@ -29,15 +29,8 @@ async function loginUser(req, res, next) {
         401
       );
     }
-    console.log(email);
-    const prueba = await connection.query(
-      `
-      UPDATE users
-      SET dateLastLogIn = (UTC_TIMESTAMP)
-      WHERE email = ?
-         `,
-      [email]
-    );
+
+    await updateLastLogin(email);
 
     // Generar token con información del usuario
     const tokenInfo = {

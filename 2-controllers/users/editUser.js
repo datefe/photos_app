@@ -2,6 +2,7 @@ const newUserAvailable = require("../../1-db/newUserAvailable");
 const updateUserData = require("../../1-db/updateUserData");
 const existUser = require("../../1-db/existUser");
 const updateProfileImage = require("../../1-db/updateProfileImage");
+const updateLastLogin = require("../../1-db/updateLastLogin");
 const jsonwebtoken = require("jsonwebtoken");
 const {
   generateError,
@@ -10,13 +11,14 @@ const {
 } = require("../../helpers");
 
 const { editUserSchema } = require("../../5-validators/userValidators");
+
 const result = {};
 const editUser = async (req, res, next) => {
   try {
     const { userName } = req.params;
     let { email, name, newUserName, surname, intro } = req.query;
 
-    await editUserSchema.validateAsync(req.body);
+    await editUserSchema.validateAsync(req.query);
 
     if (req.auth.userName !== userName && req.auth.role !== "admin") {
       throw generateError("No tienes permisos para editar este usuario", 403);
@@ -51,6 +53,7 @@ const editUser = async (req, res, next) => {
         expiresIn: "30d",
       });
       result.token = token;
+      updateLastLogin;
     }
     await updateUserData(email, name, newUserName, surname, intro, userName);
 
@@ -58,14 +61,13 @@ const editUser = async (req, res, next) => {
       const { image } = req.files;
 
       try {
-        console.log(image);
         const processedImage = await processAndSaveImageProfile(
           image,
           req.auth.id
         );
 
         await updateProfileImage(processedImage, req.auth.id);
-        console.log(saveData.image, processedImage);
+
         if (saveData.image && saveData.image !== processedImage) {
           await deleteUpload(saveData.image);
         }

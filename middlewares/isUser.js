@@ -43,11 +43,11 @@ async function isUser(req, res, next) {
       error.httpStatus = 401;
       throw error;
     }
-
+    console.log(result);
     // en caso de linux:
     // const tokenCreatedAt = new Date((tokenInfo.iat + 7200) * 1000);
     const tokenCreatedAt = new Date(tokenInfo.iat * 1000);
-    const userLastAuthUpdate = new Date(result[0].lastAuthUpdate);
+    const userLastAuthUpdate = new Date(result[0].dateLastLogin);
 
     if (tokenCreatedAt < userLastAuthUpdate) {
       const error = new Error(
