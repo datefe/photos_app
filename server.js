@@ -15,10 +15,16 @@ const isUser = require("./middlewares/isUser");
 
 //POSTS Controllers
 
-const newPost = require("./2-controllers/posts/newPost");
+const {
+  newPost,
+  getPostsLatest,
+  getPostById,
+  getPostUser,
+} = require("./controllers/posts");
+/* const newPost = require("./2-controllers/posts/newPost");
 const getPostsLatest = require("./2-controllers/posts/getPostsLatest");
 const getPostById = require("./2-controllers/posts/getPostById");
-const getPostUser = require("./2-controllers/posts/getPostUser");
+const getPostUser = require("./2-controllers/posts/getPostUser"); */
 
 //USERS Controllers
 const {
@@ -27,21 +33,15 @@ const {
   getUser,
   deleteUser,
   editUser,
-} = require("./2-controllers/users");
-
-// const newUser = require("./2-controllers/users/newUser");
-// const loginUser = require("./2-controllers/users/loginUser");
-// const getUser = require("./2-controllers/users/getUser");
-// const deleteUser = require("./2-controllers/users/deleteUser");
-// const editUser = require("./2-controllers/users/editUser");
+} = require("./controllers/users");
 
 //LIKES Controller
 
-const toggleLikes = require("./2-controllers/likes/likes");
+const toggleLikes = require("./controllers/likes/likes");
 
 //COMMENTS Controller
 
-const newComment = require("./2-controllers/comments/newComment");
+const newComment = require("./controllers/comments/newComment");
 
 //Endpoints / Rutas
 
@@ -50,7 +50,7 @@ app.post("/user", newUser);
 app.post("/user/login", loginUser);
 app.get("/user/:userName", getUser);
 app.put("/user/modify/:userName", isUser, editUser);
-app.delete("/user/delete/:id", isUser, deleteUser);
+app.delete("/user/delete/:id", isUser, isAdmin, deleteUser);
 
 //POSTS
 app.post("/post", isUser, newPost);

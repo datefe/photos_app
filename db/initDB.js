@@ -100,7 +100,7 @@ async function main() {
     await connection.query(
       `
       INSERT INTO users(dateCreation, dateLastLogin, name, surname, email, password, userName, role, active)
-      VALUES(UTC_TIMESTAMP, UTC_TIMESTAMP, "Admin", "Surname", "admin@email.com", SHA2("${process.env.DEFAULT_ADMIN_PASSWORD}", 512), "admin", "admin", true)
+      VALUES(UTC_TIMESTAMP, UTC_TIMESTAMP, "Admin", "Surname", "admin@email.com", SHA2("adminPass}", 512), "admin", "admin", true)
     `
     );
 

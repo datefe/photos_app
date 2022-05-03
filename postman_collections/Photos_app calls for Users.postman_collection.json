@@ -18,7 +18,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"email\": \"prueba@gmail.com\",\n \"password\": \"prueba123\",\n \"userName\" : \"prueba\"\n}"
+					"raw": "{\"email\": \"prueba3@gmail.com\",\n \"password\": \"prueba123\",\n \"userName\" : \"Ejemplo\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3000/user",
@@ -40,7 +40,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/user/Isabel/?orderBy=likes",
+					"raw": "http://localhost:3000/user/Rosa",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -48,18 +48,13 @@
 					"port": "3000",
 					"path": [
 						"user",
-						"Isabel",
-						""
+						"Rosa"
 					],
 					"query": [
 						{
 							"key": "userName",
 							"value": "Isabel",
 							"disabled": true
-						},
-						{
-							"key": "orderBy",
-							"value": "likes"
 						}
 					]
 				}
@@ -70,7 +65,17 @@
 			"name": "Borrar usuario",
 			"request": {
 				"method": "DELETE",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
 				"url": {
 					"raw": "http://localhost:3000/user/delete/11",
 					"protocol": "http",
@@ -96,11 +101,17 @@
 						"key": "Content-Type",
 						"value": "application/json",
 						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\"email\": \"prueba@gmail.com\",\n \"password\": \"prueba123\"  \n}"
+					"raw": "{\n    \"email\": \"prueba3@gmail.com\",\n    \"password\": \"prueba123\",\n    \"userName\" : \"Nacho\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:3000/user/login",
@@ -124,7 +135,7 @@
 				"header": [
 					{
 						"key": "Authorization",
-						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTIsInJvbGUiOiJub3JtYWwiLCJpYXQiOjE2NTExNzk0OTMsImV4cCI6MTY1Mzc3MTQ5M30._2qT3ZTFgjbMRFod_eyc7tgmWPwtGZc0x0JT_kpnbjw",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInJvbGUiOiJub3JtYWwiLCJ1c2VyTmFtZSI6IlBhcXVpdG8iLCJpYXQiOjE2NTE0ODkyOTIsImV4cCI6MTY1NDA4MTI5Mn0.U9ARlpKlrIT0RL4yMLZinHyfhSqqFvyjoylaBpE1zng",
 						"type": "text"
 					},
 					{
@@ -145,7 +156,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:3000/user/modify/12/?userName=toñitowei",
+					"raw": "http://localhost:3000/user/modify/pedrito",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -154,14 +165,7 @@
 					"path": [
 						"user",
 						"modify",
-						"12",
-						""
-					],
-					"query": [
-						{
-							"key": "userName",
-							"value": "toñitowei"
-						}
+						"pedrito"
 					]
 				}
 			},

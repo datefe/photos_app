@@ -1,5 +1,5 @@
-const { getConnection } = require("../../1-db/db");
-const { newCommentSchema } = require("../../5-validators/commentValidators");
+const { getConnection } = require("../../db/db");
+const { newCommentSchema } = require("../../validators/commentValidators");
 
 async function newComment(req, res, next) {
   let connection;

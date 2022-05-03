@@ -1,5 +1,5 @@
 const jsonwebtoken = require("jsonwebtoken");
-const { getConnection } = require("../1-db/db");
+const { getConnection } = require("../db/db");
 
 async function isUser(req, res, next) {
   let connection;

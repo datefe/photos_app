@@ -1,6 +1,6 @@
-const existUser = require("../../1-db/existUser");
-const existPost = require("../../1-db/existPost");
-const likeExist = require("../../1-db/toggleLike");
+const existUser = require("../../db/existUser");
+const existPost = require("../../db/existPost");
+const likeExist = require("../../db/toggleLike");
 const toggleLikes = async (req, res, next) => {
   try {
     const userId = req.auth.id;

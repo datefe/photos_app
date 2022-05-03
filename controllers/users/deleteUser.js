@@ -1,4 +1,4 @@
-const { getConnection } = require("../../1-db/db");
+const { getConnection } = require("../../db/db");
 const { deleteUpload } = require("../../helpers");
 
 async function deleteUser(req, res, next) {
@@ -9,7 +9,7 @@ async function deleteUser(req, res, next) {
     const { id } = req.params;
 
     // Compruebo que existe el usuario
-    const [user] = await connection.query(
+    const user = await connection.query(
       `
       SELECT id, image
       FROM users
@@ -18,9 +18,9 @@ async function deleteUser(req, res, next) {
       [id]
     );
 
-    if (user.length === 0) {
+    if (user.length === 0 || req.auth.id === id) {
       const error = new Error(
-        `No existe ningún usuario con id ${id} en la base de datos`
+        `No existe ningún usuario con id ${id} en la base de datos o eres tu mismo.`
       );
       error.httpStatus = 404;
       throw error;
