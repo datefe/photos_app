@@ -1,8 +1,8 @@
-const newUserAvailable = require("../../1-db/newUserAvailable");
-const updateUserData = require("../../1-db/updateUserData");
-const existUser = require("../../1-db/existUser");
-const updateProfileImage = require("../../1-db/updateProfileImage");
-const updateLastLogin = require("../../1-db/updateLastLogin");
+const newUserAvailable = require("../../db/newUserAvailable");
+const updateUserData = require("../../db/updateUserData");
+const existUser = require("../../db/existUser");
+const updateProfileImage = require("../../db/updateProfileImage");
+const updateLastLogin = require("../../db/updateLastLogin");
 const jsonwebtoken = require("jsonwebtoken");
 const {
   generateError,
@@ -10,7 +10,7 @@ const {
   deleteUpload,
 } = require("../../helpers");
 
-const { editUserSchema } = require("../../5-validators/userValidators");
+const { editUserSchema } = require("../../validators/userValidators");
 
 const result = {};
 const editUser = async (req, res, next) => {
@@ -24,7 +24,7 @@ const editUser = async (req, res, next) => {
       throw generateError("No tienes permisos para editar este usuario", 403);
     }
 
-    const [saveData] = await existUser(userName);
+    await existUser(userName);
 
     if (!email) {
       email = saveData.email;
@@ -41,7 +41,6 @@ const editUser = async (req, res, next) => {
     if (!newUserName) {
       newUserName = userName;
     } else {
-      //comprobar que el newUserName esté disponible
       await newUserAvailable(newUserName);
       const tokenInfo = {
         id: req.auth.id,

@@ -1,6 +1,6 @@
-const { getConnection } = require("../../1-db/db");
+const { getConnection } = require("../../db/db");
 const { generateError, proccesImagesPost } = require("../../helpers");
-const { newPostSchema } = require("../../5-validators/postValidators");
+const { newPostSchema } = require("../../validators/postValidators");
 
 const newPost = async (req, res, next) => {
   let connection;
@@ -20,7 +20,7 @@ const newPost = async (req, res, next) => {
       let i = 1;
       for (const imageData of Object.entries(req.files).slice(0, 2)) {
         try {
-          console.log(imageData[1]);
+          console.log(imageData);
           const pathImage = await proccesImagesPost(imageData[1]);
           const [result] = await connection.query(
             `

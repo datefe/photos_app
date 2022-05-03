@@ -13,7 +13,7 @@ const postLikes = async (id) => {
     `,
       [id]
     );
-
+    console.log(list);
     return list;
   } finally {
     if (connection) connection.release();
