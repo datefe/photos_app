@@ -14,11 +14,11 @@ Entities / Entidades
 Endpoints / Rutas
 
 //USERS
-/user
-/user/login
-/user/:userName
-/user/modify/:userName
-/user/delete/:id
+- /user
+- /user/login
+- /user/:userName
+- /user/modify/:userName
+- /user/delete/:id
 
 //POSTS
 /post
