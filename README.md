@@ -21,16 +21,16 @@ Endpoints / Rutas
 - /user/delete/:id
 
 //POSTS
-/post
-/posts
-/post/:id
-/post/user/:id
+- /post
+- /posts
+- /post/:id
+- /post/user/:id
 
 //LIKES
-/likes/:postId
+- /likes/:postId
 
 //COMMENTS
-/comment
+- /comment
 
 Instructions for deployment in Spanish / Instrucciones en Español
 
