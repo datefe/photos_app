@@ -11,7 +11,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/posts",
+					"raw": "http://localhost:3000/posts?order=title&direction=ASC",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -19,6 +19,16 @@
 					"port": "3000",
 					"path": [
 						"posts"
+					],
+					"query": [
+						{
+							"key": "order",
+							"value": "title"
+						},
+						{
+							"key": "direction",
+							"value": "ASC"
+						}
 					]
 				}
 			},
@@ -39,26 +49,6 @@
 					"path": [
 						"post",
 						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Post by Txt",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3000/post/hola",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"post",
-						"hola"
 					]
 				}
 			},
