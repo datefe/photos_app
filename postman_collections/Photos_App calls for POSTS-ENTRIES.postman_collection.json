@@ -1,143 +1,172 @@
 {
-  "info": {
-    "_postman_id": "633ccda0-9660-4c37-9988-a18d72f246ed",
-    "name": "Photos_App calls for POSTS/ENTRIES",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-  },
-  "item": [
-    {
-      "name": "Get Posts",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/posts",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["posts"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get Post by ID",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/post/1",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["post", "1"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get Post by Txt",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/post/hola",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["post", "hola"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Get Post by User",
-      "request": {
-        "method": "GET",
-        "header": [],
-        "url": {
-          "raw": "http://localhost:3000/post/user/3",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["post", "user", "3"]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "New Post",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInJvbGUiOiJub3JtYWwiLCJ1c2VyTmFtZSI6InBydWViYTQiLCJpYXQiOjE2NTE1MjY3NzYsImV4cCI6MTY1NDExODc3Nn0.aAtcpihg2GzGu0aYw1H9CpM7XEa12YznlltRrdv4ZV0",
-            "type": "default"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3000/post/?userName=prueba4&title=Titulo del titulo&place=lugar",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["post", ""],
-          "query": [
-            {
-              "key": "userName",
-              "value": "prueba4"
-            },
-            {
-              "key": "title",
-              "value": "Titulo del titulo"
-            },
-            {
-              "key": "place",
-              "value": "lugar"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "New Comment",
-      "request": {
-        "method": "POST",
-        "header": [
-          {
-            "key": "Authorization",
-            "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInJvbGUiOiJub3JtYWwiLCJ1c2VyTmFtZSI6InBydWViYTQiLCJpYXQiOjE2NTE1MjY3NzYsImV4cCI6MTY1NDExODc3Nn0.aAtcpihg2GzGu0aYw1H9CpM7XEa12YznlltRrdv4ZV0",
-            "type": "default"
-          }
-        ],
-        "body": {
-          "mode": "raw",
-          "raw": "{\n    \"post_id\": 10,\n    \"comment\": \"este post es muy malo\"\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:3000/comment",
-          "protocol": "http",
-          "host": ["localhost"],
-          "port": "3000",
-          "path": ["comment"]
-        }
-      },
-      "response": []
-    }
-  ]
+	"info": {
+		"_postman_id": "633ccda0-9660-4c37-9988-a18d72f246ed",
+		"name": "Photos_App calls for POSTS/ENTRIES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Posts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/posts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"posts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Post by ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/post/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Post by Txt",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/post/hola",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post",
+						"hola"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Post by User",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/post/user/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post",
+						"user",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInJvbGUiOiJub3JtYWwiLCJ1c2VyTmFtZSI6InBydWViYTQiLCJpYXQiOjE2NTE1MjY3NzYsImV4cCI6MTY1NDExODc3Nn0.aAtcpihg2GzGu0aYw1H9CpM7XEa12YznlltRrdv4ZV0",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/post/?userName=prueba4&title=Titulo del titulo&place=lugar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"post",
+						""
+					],
+					"query": [
+						{
+							"key": "userName",
+							"value": "prueba4"
+						},
+						{
+							"key": "title",
+							"value": "Titulo del titulo"
+						},
+						{
+							"key": "place",
+							"value": "lugar"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Comment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInJvbGUiOiJub3JtYWwiLCJ1c2VyTmFtZSI6InBydWViYTQiLCJpYXQiOjE2NTE1MjY3NzYsImV4cCI6MTY1NDExODc3Nn0.aAtcpihg2GzGu0aYw1H9CpM7XEa12YznlltRrdv4ZV0",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"post_id\": 10,\n    \"comment\": \"este post es muy malo\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/comment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"comment"
+					]
+				}
+			},
+			"response": []
+		}
+	]
 }
