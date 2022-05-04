@@ -21,10 +21,6 @@ const {
   getPostById,
   getPostUser,
 } = require("./controllers/posts");
-/* const newPost = require("./2-controllers/posts/newPost");
-const getPostsLatest = require("./2-controllers/posts/getPostsLatest");
-const getPostById = require("./2-controllers/posts/getPostById");
-const getPostUser = require("./2-controllers/posts/getPostUser"); */
 
 //USERS Controllers
 const {
@@ -57,7 +53,6 @@ app.post("/post", isUser, newPost);
 app.get("/posts", getPostsLatest);
 app.get("/post/:id", getPostById);
 app.get("/post/user/:id", getPostUser);
-app.delete("/post/delete/:id");
 
 //LIKES
 app.get("/likes/:postId", isUser, toggleLikes);
