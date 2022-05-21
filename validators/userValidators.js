@@ -46,7 +46,7 @@ const editUserSchema = Joi.object().keys({
     ),
   userName: Joi.string()
     .max(25)
-    .required()
+
     .error(
       generateError(
         "El campo nombre de usuario no puede tener más de 25 caracteres y es obligatorio / The userName field can't have more than 25 characters and must have a value",

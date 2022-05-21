@@ -17,14 +17,14 @@ const editUser = async (req, res, next) => {
   try {
     const { userName } = req.params;
     let { email, name, newUserName, surname, intro } = req.query;
-
+    console.log(userName);
     await editUserSchema.validateAsync(req.query);
 
     if (req.auth.userName !== userName && req.auth.role !== "admin") {
       throw generateError("No tienes permisos para editar este usuario", 403);
     }
 
-    await existUser(userName);
+    const [saveData] = await existUser(userName);
 
     if (!email) {
       email = saveData.email;
@@ -54,8 +54,9 @@ const editUser = async (req, res, next) => {
       result.token = token;
       updateLastLogin;
     }
-    await updateUserData(email, name, newUserName, surname, intro, userName);
 
+    await updateUserData(email, name, newUserName, surname, intro, userName);
+    console.log("<<<<", req.file);
     if (req.files && Object.keys(req.files).length > 0) {
       const { image } = req.files;
 

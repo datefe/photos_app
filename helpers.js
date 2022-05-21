@@ -54,7 +54,7 @@ async function proccesImagesPost(uploadedImage) {
     isDir.isDirectory();
   } catch (error) {
     await fs.mkdir(imagePathPost, { recursive: true });
-    console.error("Creada carpeta de almacenamiento de posts");
+    console.log("Creada carpeta de almacenamiento de posts");
   }
 
   const image = sharp(uploadedImage.data);
