@@ -30,12 +30,14 @@ async function getPostsLatest(req, res, next) {
     if (search) {
       queryResults = await connection.query(
         `
-        SELECT posts.dateCreation AS "Post Date Creation",  posts.title AS "Post Title",
-        posts.place AS "Place", images.path AS "Image Path"
         
+
+        SELECT posts.dateCreation, posts.id AS postId, posts.place, posts.title, images.id AS imageId, images.path AS "image", images.post_id AS imagePostId, COUNT(likes.id) AS likesCount
         FROM posts
-        INNER JOIN images on images.post_id = posts.id
+        INNER JOIN images ON posts.id =  images.post_id
+        INNER JOIN likes ON posts.id =  likes.post_id
         WHERE posts.place LIKE ? OR posts.title LIKE ?
+        GROUP BY images.id 
         ORDER BY ${orderBy} ${orderDirection}
         `,
         [`%${search}%`, `%${search}%`]
@@ -43,22 +45,46 @@ async function getPostsLatest(req, res, next) {
     } else {
       queryResults = await connection.query(
         `
-        SELECT posts.dateCreation AS "Post Date Creation", posts.title AS "Post Title",
-        posts.place AS "Place", images.path AS "Image Path"
-        
+        SELECT posts.dateCreation, posts.id AS postId, posts.place, posts.title, images.id AS imageId, images.path AS "image", images.post_id AS imagePostId, COUNT(likes.id) AS likesCount
         FROM posts
-        INNER JOIN images on images.post_id = posts.id
-        ORDER BY ${orderBy} ${orderDirection}`
+        INNER JOIN images ON posts.id =  images.post_id
+        INNER JOIN likes ON posts.id =  likes.post_id
+        
+        GROUP BY images.id 
+        ORDER BY ${orderBy} ${orderDirection}
+        `
       );
     }
 
     // Extraigo los resultados reales del resultado de la query
     const [result] = queryResults;
 
+    const joinedResults = result.reduce((acc, current) => {
+      const existingItem = acc.find((item) => item.postId === current.postId);
+
+      if (!existingItem) {
+        acc.push({
+          ...current,
+          image: [{ path: current["image"], id: current["imageId"] }],
+        });
+      } else {
+        existingItem["image"].push({
+          path: current["image"],
+          id: current["imageId"],
+        });
+      }
+
+      return acc;
+    }, []);
+
+    console.log(joinedResults);
+
+    // console.log(result);
+
     // Mando la respuesta
     res.send({
       status: "ok",
-      data: result,
+      data: joinedResults,
     });
   } catch (error) {
     next(error);

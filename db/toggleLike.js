@@ -1,5 +1,4 @@
 const { getConnection } = require("./db");
-const { generateError } = require("../helpers");
 
 const likeExist = async (userId, postId) => {
   let connection;
@@ -16,7 +15,7 @@ const likeExist = async (userId, postId) => {
     );
 
     if (exist.length < 1) {
-      const [exist] = await connection.query(
+      await connection.query(
         `
               INSERT INTO likes (post_id,users_id, dateCreation)
               VALUES (?,?,(UTC_TIMESTAMP));
@@ -25,7 +24,7 @@ const likeExist = async (userId, postId) => {
       );
       return "Se ha incluido el like a la base de datos";
     } else {
-      const [exist] = await connection.query(
+      await connection.query(
         `
                   DELETE
                   FROM likes

@@ -1,4 +1,3 @@
-const existUser = require("../../db/existUser");
 const existPost = require("../../db/existPost");
 const likeExist = require("../../db/toggleLike");
 const toggleLikes = async (req, res, next) => {
@@ -7,7 +6,7 @@ const toggleLikes = async (req, res, next) => {
     let { postId } = req.params;
     postId = parseInt(postId);
 
-    const postExist = await existPost(postId);
+    await existPost(postId);
 
     const like = await likeExist(userId, postId);
 

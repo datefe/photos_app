@@ -3,12 +3,14 @@ require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const fileUpload = require("express-fileupload");
+const cors = require("cors");
 
 const app = express();
 
 app.use(express.json());
 app.use(fileUpload());
 app.use(morgan("dev"));
+app.use(cors());
 
 const isAdmin = require("./middlewares/isAdmin");
 const isUser = require("./middlewares/isUser");
@@ -81,6 +83,6 @@ app.use((error, req, res, next) => {
 
 //Starting the server / lanzamos el servidor
 
-app.listen(3000, () => {
+app.listen(3100, () => {
   console.log("Server started / Servidor funcionando");
 });
