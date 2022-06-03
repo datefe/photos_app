@@ -9,13 +9,19 @@ const getUser = async (req, res, next) => {
 
     const list = await postList(userData.id);
 
-    console.log("---->>", list);
+    const response = {
+      ...userData,
+      postCounter: list.length,
+      posts: [...list],
+    };
+    console.log("---->>", response);
 
     res.send({
       status: "ok",
-      message: list,
+      data: response,
     });
   } catch (error) {
+    console.log("aqui estamos");
     next(error);
   }
 };

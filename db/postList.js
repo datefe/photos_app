@@ -39,7 +39,7 @@ const postList = async (id) => {
       return acc;
     }, []);
 
-    console.log(joinedResults);
+    console.log(".,.,.,", joinedResults);
 
     return joinedResults;
   } finally {
