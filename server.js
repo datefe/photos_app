@@ -40,7 +40,8 @@ const toggleLikes = require("./controllers/likes/likes");
 //COMMENTS Controller
 
 const newComment = require("./controllers/comments/newComment");
-
+const getMessages = require("./controllers/comments/getMessages");
+const likesList = require("./controllers/likes/likesList");
 //Endpoints / Rutas
 
 //USERS
@@ -57,11 +58,12 @@ app.get("/post/:id", getPostById);
 app.get("/post/user/:id", getPostUser);
 
 //LIKES
+app.get("/post-likes/:postId", likesList);
 app.get("/likes/:postId", isUser, toggleLikes);
 
 //COMMENTS
 app.post("/comment", isUser, newComment);
-
+app.get("/comments/:postId", getMessages);
 //Middleware 404
 
 app.use((req, res) => {
