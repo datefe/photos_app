@@ -7,13 +7,15 @@ const postLikes = async (id) => {
 
     const [list] = await connection.query(
       `
-    SELECT COUNT(*) AS likes
-    FROM likes 
-    WHERE post_id = ?;
+      SELECT likes.id, users.name, users.surname, users.image
+      FROM likes
+      INNER JOIN users ON likes.users_id = users.id
+      WHERE likes.post_id = ?
+      ORDER BY likes.dateCreation
     `,
       [id]
     );
-    console.log(list);
+
     return list;
   } finally {
     if (connection) connection.release();
