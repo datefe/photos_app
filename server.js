@@ -11,6 +11,8 @@ app.use(express.json());
 app.use(fileUpload());
 app.use(morgan("dev"));
 app.use(cors());
+app.use("/postUpload", express.static("./postUpload"));
+app.use("/profileUpload", express.static("./profileUpload"));
 
 const isAdmin = require("./middlewares/isAdmin");
 const isUser = require("./middlewares/isUser");

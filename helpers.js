@@ -66,7 +66,7 @@ async function proccesImagesPost(uploadedImage) {
 
   const imageFileName = `${uuid.v4()}${uploadedImage.name}`;
   const imagePath = path.join(imagePathPost, imageFileName);
-  await image.toFile(imagePath);
+  await image.toFile(imageFileName);
 
   return imagePath;
 }

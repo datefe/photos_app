@@ -5,7 +5,7 @@ const getMessages = async (req, res, next) => {
 
   try {
     const { postId } = req.params;
-    console.log(postId);
+
     connection = await getConnection();
     const [messages] = await connection.query(
       `
