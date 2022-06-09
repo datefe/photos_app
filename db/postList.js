@@ -39,8 +39,6 @@ const postList = async (id) => {
       return acc;
     }, []);
 
-    console.log(".,.,.,", joinedResults);
-
     return joinedResults;
   } finally {
     if (connection) connection.release();

@@ -10,7 +10,7 @@ async function getPostsLatest(req, res, next) {
 
     // Proceso la dirección de orden
     const orderDirection =
-      (direction && direction.toLowerCase()) === "desc" ? "ASC" : "DESC";
+      (direction && direction.toLowerCase()) === "desc" ? "DESC" : "ASC";
 
     // Proceso el campo de orden
     let orderBy;
@@ -30,12 +30,11 @@ async function getPostsLatest(req, res, next) {
     if (search) {
       queryResults = await connection.query(
         `
-        
-
-        SELECT posts.dateCreation, posts.id AS postId, posts.place, posts.title, images.id AS imageId, images.path AS "image", images.post_id AS imagePostId, COUNT(likes.id) AS likesCount
+        SELECT posts.dateCreation, posts.id AS postId, posts.place, posts.title, images.id AS imageId,
+        images.path AS "image", images.post_id AS imagePostId, COUNT(likes.id) AS likesCount
         FROM posts
         INNER JOIN images ON posts.id =  images.post_id
-        INNER JOIN likes ON posts.id =  likes.post_id
+        LEFT JOIN likes ON posts.id =  likes.post_id
         WHERE posts.place LIKE ? OR posts.title LIKE ?
         GROUP BY images.id 
         ORDER BY ${orderBy} ${orderDirection}
@@ -45,10 +44,13 @@ async function getPostsLatest(req, res, next) {
     } else {
       queryResults = await connection.query(
         `
-        SELECT posts.dateCreation, posts.id AS postId, posts.place, posts.title, images.id AS imageId, images.path AS "image", images.post_id AS imagePostId, COUNT(likes.id) AS likesCount
+        SELECT posts.dateCreation, posts.id AS postId, posts.place, posts.title,
+        users.userName , users.image AS userAvatar,
+        images.id AS imageId, images.path AS "image", images.post_id AS imagePostId, COUNT(likes.id)
         FROM posts
+        INNER JOIN users ON posts.users_id = users.id
         INNER JOIN images ON posts.id =  images.post_id
-        INNER JOIN likes ON posts.id =  likes.post_id
+        LEFT JOIN likes ON images.post_id =  likes.post_id
         
         GROUP BY images.id 
         ORDER BY ${orderBy} ${orderDirection}

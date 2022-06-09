@@ -37,6 +37,7 @@ const newPost = async (req, res, next) => {
           VALUES (?,?)`,
             [result.insertId, pathImage]
           );
+          console.log(saveImage);
         } catch (error) {
           throw generateError(
             "No se pudo procesar el post. Inténtalo de nuevo",

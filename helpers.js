@@ -5,8 +5,8 @@ const uuid = require("uuid");
 const sharp = require("sharp");
 const path = require("path");
 
-const imageUploadPath = path.join(__dirname, process.env.UPLOADS_PROFILE);
-const imagePathPost = path.join(__dirname, process.env.UPLOADS_POST);
+const imageUploadPath = path.join(process.env.UPLOADS_PROFILE);
+const imagePathPost = path.join(process.env.UPLOADS_POST);
 
 function formatDateToDB(date) {
   return format(new Date(date), "yyyy-MM-dd HH:mm:ss");
@@ -66,7 +66,7 @@ async function proccesImagesPost(uploadedImage) {
 
   const imageFileName = `${uuid.v4()}${uploadedImage.name}`;
   const imagePath = path.join(imagePathPost, imageFileName);
-  await image.toFile(imagePath);
+  await image.toFile(imageFileName);
 
   return imagePath;
 }
