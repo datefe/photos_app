@@ -1,9 +1,9 @@
 const existUser = require("../../db/existUser");
 const postList = require("../../db/postList");
 
-const getUser = async (req, res, next) => {
+const getOwnProfile = async (req, res, next) => {
   try {
-    const { userName } = req.params;
+    const { userName } = req.auth;
 
     const [userData] = await existUser(userName);
 
@@ -14,7 +14,7 @@ const getUser = async (req, res, next) => {
       postCounter: list.length,
       posts: [...list],
     };
-
+    console.log(response);
     res.send({
       status: "ok",
       data: response,
@@ -24,4 +24,4 @@ const getUser = async (req, res, next) => {
   }
 };
 
-module.exports = getUser;
+module.exports = getOwnProfile;

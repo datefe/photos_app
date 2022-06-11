@@ -79,8 +79,6 @@ async function getPostsLatest(req, res, next) {
       return acc;
     }, []);
 
-    console.log(joinedResults);
-
     // console.log(result);
 
     // Mando la respuesta

@@ -8,7 +8,7 @@ const existUser = async (userName) => {
 
     const [exist] = await connection.query(
       `
-        SELECT id, name, surname, email, image, intro
+        SELECT id, name, surname, email, image, intro, userName
         FROM users
         WHERE userName = ? ;
         `,

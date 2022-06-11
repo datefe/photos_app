@@ -19,6 +19,7 @@ async function isUser(req, res, next) {
     // Comprobar que el token es válido
     // y decodificar el contenido del token
     let tokenInfo;
+
     try {
       tokenInfo = jsonwebtoken.verify(authorization, process.env.SECRET);
     } catch (error) {
@@ -43,7 +44,7 @@ async function isUser(req, res, next) {
       error.httpStatus = 401;
       throw error;
     }
-    console.log(result);
+
     // en caso de linux:
     // const tokenCreatedAt = new Date((tokenInfo.iat + 7200) * 1000);
     const tokenCreatedAt = new Date(tokenInfo.iat * 1000);

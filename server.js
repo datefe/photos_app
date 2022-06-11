@@ -44,12 +44,14 @@ const toggleLikes = require("./controllers/likes/likes");
 const newComment = require("./controllers/comments/newComment");
 const getMessages = require("./controllers/comments/getMessages");
 const likesList = require("./controllers/likes/likesList");
+const getOwnProfile = require("./controllers/users/getOwnProfile");
 //Endpoints / Rutas
 
 //USERS
 app.post("/user", newUser);
 app.post("/user/login", loginUser);
 app.get("/user/:userName", getUser);
+app.get("/user", isUser, getOwnProfile);
 app.put("/user/modify/:userName", isUser, editUser);
 app.delete("/user/delete/:id", isUser, isAdmin, deleteUser);
 
