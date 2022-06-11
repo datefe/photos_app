@@ -6,9 +6,11 @@ async function newComment(req, res, next) {
   try {
     connection = await getConnection();
 
-    console.log(req.auth.id);
+    let { comment } = req.body;
+    let { post_id } = req.query;
+    post_id = Number(post_id);
 
-    const { post_id, comment } = req.body;
+    console.log("POST:", post_id, comment);
 
     await newCommentSchema.validateAsync(req.body);
 

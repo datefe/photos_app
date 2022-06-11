@@ -16,7 +16,6 @@ const newCommentSchema = Joi.object().keys({
     ),
   post_id: Joi.number()
     .min(1)
-    .required()
     .error(generateError("Valor minimo es 1 / Minimum value is 1", 400)),
 });
 
