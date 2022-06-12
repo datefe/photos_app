@@ -43,6 +43,7 @@ async function processAndSaveImageProfile(uploadedImage, id) {
 
   const imageFileName = `${id}${uploadedImage.name}`;
   const imagePath = path.join(imageUploadPath, imageFileName);
+  console.log(imageFileName);
   await image.toFile(imagePath);
 
   return imagePath;

@@ -16,8 +16,8 @@ const result = {};
 const editUser = async (req, res, next) => {
   try {
     const { userName } = req.params;
-    let { email, name, newUserName, surname, intro } = req.query;
-    console.log(userName);
+
+    let { email, name, newUserName, surname, intro } = req.body;
     await editUserSchema.validateAsync(req.query);
 
     if (req.auth.userName !== userName && req.auth.role !== "admin") {
@@ -56,7 +56,7 @@ const editUser = async (req, res, next) => {
     }
 
     await updateUserData(email, name, newUserName, surname, intro, userName);
-    console.log("<<<<", req.file);
+
     if (req.files && Object.keys(req.files).length > 0) {
       const { image } = req.files;
 
