@@ -43,7 +43,7 @@ async function processAndSaveImageProfile(uploadedImage, id) {
 
   const imageFileName = `${id}${uploadedImage.name}`;
   const imagePath = path.join(imageUploadPath, imageFileName);
-  console.log(imageFileName);
+
   await image.toFile(imagePath);
 
   return imagePath;
@@ -67,9 +67,9 @@ async function proccesImagesPost(uploadedImage) {
 
   const imageFileName = `${uuid.v4()}${uploadedImage.name}`;
   const imagePath = path.join(imagePathPost, imageFileName);
-  await image.toFile(imageFileName);
+  await image.toFile(imagePath);
 
-  return imagePath;
+  return imageFileName;
 }
 
 module.exports = {

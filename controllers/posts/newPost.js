@@ -1,59 +1,54 @@
+const { isArray } = require("lodash");
 const { getConnection } = require("../../db/db");
 const { generateError, proccesImagesPost } = require("../../helpers");
-const { newPostSchema } = require("../../validators/postValidators");
+const {
+  newPostSchema,
+  newImageSchema,
+} = require("../../validators/postValidators");
 
 const newPost = async (req, res, next) => {
-  let connection;
+  const { title, place } = req.body;
 
-  const { userName, title, place } = req.query;
   const users_id = req.auth.id;
 
+  let connection;
   try {
-    if (req.auth.userName !== userName) {
-      throw generateError("No tienes permisos para hacer ese post", 403);
+    await newPostSchema.validateAsync(req.body);
+
+    if (!isArray(req.files.image)) {
+      req.files.image = [{ ...req.files.image }];
     }
+
+    await newImageSchema.validateAsync(req.files);
     connection = await getConnection();
 
-    await newPostSchema.validateAsync(req.query);
+    const [result] = await connection.query(
+      `
+      INSERT INTO posts (users_id, title, place, dateCreation)
+      VALUES (?,?,?,(UTC_TIMESTAMP))
+      
+      `,
+      [users_id, title, place]
+    );
 
-    if (req.files && Object.keys(req.files).length > 0) {
-      let i = 1;
-      for (const imageData of Object.entries(req.files).slice(0, 2)) {
-        try {
-          console.log(imageData);
-          const pathImage = await proccesImagesPost(imageData[1]);
-          const [result] = await connection.query(
-            `
-          INSERT INTO posts (users_id, title, place, dateCreation)
-          VALUES (?,?,?,(UTC_TIMESTAMP))
-          
-          `,
-            [users_id, title, place]
-          );
+    for (const imageData of req.files.image.slice(0, 3)) {
+      const pathImage = await proccesImagesPost(imageData);
 
-          const [saveImage] = await connection.query(
-            `
+      await connection.query(
+        `
           INSERT INTO images (post_id , path)
           VALUES (?,?)`,
-            [result.insertId, pathImage]
-          );
-          console.log(saveImage);
-        } catch (error) {
-          throw generateError(
-            "No se pudo procesar el post. Inténtalo de nuevo",
-            400
-          );
-        }
-        i++;
-      }
+        [result.insertId, pathImage]
+      );
     }
 
     res.send({
       status: "ok",
       message: "post creado",
+      postId: result.insertId,
     });
   } catch (error) {
-    next(error);
+    next(generateError("No se pudo procesar el post. Inténtalo de nuevo", 400));
   } finally {
     if (connection) connection.release();
   }

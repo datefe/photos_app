@@ -14,18 +14,29 @@ const newPostSchema = Joi.object().keys({
         400
       )
     ),
-  place: Joi.string().max(50),
-  userName: Joi.string()
-    .max(25)
-    .required()
+  place: Joi.string()
+    .max(50)
     .error(
       generateError(
-        "El campo nombre de usuario no puede tener más de 25 caracteres y es obligatorio / The userName field can't have more than 25 characters and must have a value",
+        "Place debe existir y tener maximo 50 caracteres / Title must exist and have at least one character",
         400
       )
     ),
 });
 
+const newImageSchema = Joi.object().keys({
+  image: Joi.array()
+    .min(0)
+    .max(3)
+    .required()
+    .error(
+      generateError(
+        "La cantidad de imagenes debe de ser entre 1 y 3 / The number of images must be between 1 and 3",
+        400
+      )
+    ),
+});
 module.exports = {
   newPostSchema,
+  newImageSchema,
 };
