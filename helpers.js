@@ -46,7 +46,7 @@ async function processAndSaveImageProfile(uploadedImage, id) {
 
   await image.toFile(imagePath);
 
-  return imagePath;
+  return imageFileName;
 }
 
 async function proccesImagesPost(uploadedImage) {

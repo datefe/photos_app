@@ -10,7 +10,7 @@ async function getPostsLatest(req, res, next) {
 
     // Proceso la dirección de orden
     const orderDirection =
-      (direction && direction.toLowerCase()) === "desc" ? "DESC" : "ASC";
+      (direction && direction.toLowerCase()) === "desc" ? "ASC" : "DESC";
 
     // Proceso el campo de orden
     let orderBy;

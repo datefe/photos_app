@@ -9,7 +9,7 @@ const getMessages = async (req, res, next) => {
     connection = await getConnection();
     const [messages] = await connection.query(
       `
-      SELECT comments.id, comments.comment, users.name AS userName, users.surname AS userSurname, users.image AS avatar
+      SELECT comments.id, comments.comment, users.name , users.surname , users.image AS avatar, users.userName
       FROM comments 
       INNER JOIN users ON comments.users_id = users.id
       WHERE comments.post_id = ?
