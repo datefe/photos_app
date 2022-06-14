@@ -46,7 +46,7 @@ async function getPostsLatest(req, res, next) {
         `
         SELECT posts.dateCreation, posts.id AS postId, posts.place, posts.title,
         users.userName , users.image AS userAvatar,
-        images.id AS imageId, images.path AS "image", images.post_id AS imagePostId, COUNT(likes.id)
+        images.id AS imageId, images.path AS "image", images.post_id AS imagePostId, COUNT(likes.id) AS likesCount
         FROM posts
         INNER JOIN users ON posts.users_id = users.id
         INNER JOIN images ON posts.id =  images.post_id

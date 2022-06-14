@@ -7,13 +7,17 @@ const postList = async (id) => {
 
     const [list] = await connection.query(
       `
-      SELECT posts.dateCreation, posts.id AS postId, posts.place, posts.title, images.id AS imageId, images.path AS "image", images.post_id AS imagePostId
+      SELECT posts.dateCreation, posts.id AS postId, posts.place, posts.title, images.id AS imageId, images.path AS "image", images.post_id AS imagePostId, COUNT(likes.id) AS likesCount
       FROM posts
       INNER JOIN images ON posts.id =  images.post_id
+      LEFT JOIN likes ON images.post_id =  likes.post_id
       
       
       WHERE posts.users_id = ?
+       GROUP BY images.id 
       ORDER BY posts.dateCreation
+     
+      
     `,
       [id]
     );
