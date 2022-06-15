@@ -14,7 +14,7 @@ const getOwnProfile = async (req, res, next) => {
       postCounter: list.length,
       posts: [...list],
     };
-    console.log(response);
+
     res.send({
       status: "ok",
       data: response,

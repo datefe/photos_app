@@ -45,14 +45,14 @@ async function getPostsLatest(req, res, next) {
       queryResults = await connection.query(
         `
         SELECT posts.dateCreation, posts.id AS postId, posts.place, posts.title,
-        users.userName , users.image AS userAvatar,
-        images.id AS imageId, images.path AS "image", images.post_id AS imagePostId, COUNT(likes.id) AS likesCount
+        users.userName , users.image AS userAvatar, images.id AS imageId, images.path AS "image",
+        images.post_id AS imagePostId,likes.id AS likeId, likes.users_id AS userLikedIt
         FROM posts
         INNER JOIN users ON posts.users_id = users.id
         INNER JOIN images ON posts.id =  images.post_id
         LEFT JOIN likes ON images.post_id =  likes.post_id
         
-        GROUP BY images.id 
+       
         ORDER BY ${orderBy} ${orderDirection}
         `
       );
@@ -61,25 +61,42 @@ async function getPostsLatest(req, res, next) {
     // Extraigo los resultados reales del resultado de la query
     const [result] = queryResults;
 
-    const joinedResults = result.reduce((acc, current) => {
-      const existingItem = acc.find((item) => item.postId === current.postId);
+    let joinedResults = result.reduce((acc, current) => {
+      const existingPost = acc.find((item) => item.postId === current.postId);
+      const existingImage = acc.find((item) => {
+        const imgExist = item.image.find((img) => img.id === current.imageId);
+        return imgExist;
+      });
+      const existingLike = acc.find((item) => {
+        const likeExist = item.likes.find((like) => like.id === current.likeId);
+        return likeExist;
+      });
 
-      if (!existingItem) {
+      if (!existingPost) {
         acc.push({
           ...current,
           image: [{ path: current["image"], id: current["imageId"] }],
+          likes: [
+            { id: current["likeId"], userLikedIt: current["userLikedIt"] },
+          ],
         });
       } else {
-        existingItem["image"].push({
-          path: current["image"],
-          id: current["imageId"],
-        });
+        if (!existingImage) {
+          existingPost["image"].push({
+            path: current["image"],
+            id: current["imageId"],
+          });
+        }
+        if (!existingLike) {
+          existingPost["likes"].push({
+            id: current["likeId"],
+            userLikedIt: current["userLikedIt"],
+          });
+        }
       }
 
       return acc;
     }, []);
-
-    // console.log(result);
 
     // Mando la respuesta
     res.send({
