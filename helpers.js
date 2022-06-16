@@ -64,6 +64,9 @@ async function proccesImagesPost(uploadedImage) {
   if (imageInfo.width > 1000) {
     image.resize(1000);
   }
+  if (imageInfo.height > 1000) {
+    image.resize({ height: 1000 });
+  }
 
   const imageFileName = `${uuid.v4()}${uploadedImage.name}`;
   const imagePath = path.join(imagePathPost, imageFileName);
