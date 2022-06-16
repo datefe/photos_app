@@ -10,13 +10,13 @@ const newCommentSchema = Joi.object().keys({
     .required()
     .error(
       generateError(
-        "Comentario debe existir y tener al menos un caracter / Comment must exist and have at least one character",
+        "Comment must exist and have at least one character. / Comentario debe existir y tener al menos un caracter.",
         400
       )
     ),
   post_id: Joi.number()
     .min(1)
-    .error(generateError("Valor minimo es 1 / Minimum value is 1", 400)),
+    .error(generateError("Minimum value is 1. / Valor minimo es 1", 400)),
 });
 
 module.exports = {

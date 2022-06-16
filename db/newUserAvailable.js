@@ -17,7 +17,7 @@ const newUserAvailable = async (userName) => {
 
     if (exist.length > 0) {
       throw generateError(
-        `El nuevo nombre de usuario '${userName}' ya esta ocupado, pruebe con otro`,
+        `The new username'${userName}' already exists, please try with a new one. / El nuevo nombre de usuario '${userName}' ya está ocupado, prueba con otro.`,
         404
       );
     }

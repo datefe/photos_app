@@ -17,7 +17,7 @@ const checkPassword = async (email, password) => {
 
     if (dbUser.length === 0) {
       throw generateError(
-        "No hay ningún usuario registrado con ese email o la password es incorrecta",
+        "User with this email does not exist or the password is incorrect. / No hay ningún usuario registrado con ese email o la password es incorrecta",
         401
       );
     }

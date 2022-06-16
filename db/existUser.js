@@ -17,7 +17,7 @@ const existUser = async (userName) => {
 
     if (exist.length < 1) {
       throw generateError(
-        `No hay ningun usuario con el userName:${userName}`,
+        `There is no user with username / No hay ningun usuario con el nombre:${userName}`,
         404
       );
     }

@@ -22,7 +22,7 @@ const likeExist = async (userId, postId) => {
               `,
         [postId, userId]
       );
-      return "Se ha incluido el like a la base de datos";
+      return "Like added to the database. / Se ha añadido el like a la base de datos.";
     } else {
       await connection.query(
         `
@@ -32,7 +32,7 @@ const likeExist = async (userId, postId) => {
                   `,
         [userId, postId]
       );
-      return "Se ha eliminado el like de la base de datos";
+      return "Like removed from the database. / Se ha eliminado el like de la base de datos.";
     }
   } finally {
     if (connection) connection.release();

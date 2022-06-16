@@ -15,7 +15,7 @@ const postImage = async (id) => {
     );
 
     if (list.length < 1) {
-      return "no hay imagenes ligadas al post";
+      return "There are no images linked to the post. / No hay imágenes ligadas al post.";
     }
 
     return list;

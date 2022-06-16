@@ -20,7 +20,7 @@ async function deleteUser(req, res, next) {
 
     if (user.length === 0 || req.auth.id === id) {
       const error = new Error(
-        `No existe ningún usuario con id ${id} en la base de datos o eres tu mismo.`
+        `There is no user with id ${id} in the database or it is your id. / No existe ningún usuario con id ${id} en la base de datos o eres tu mismo.`
       );
       error.httpStatus = 404;
       throw error;
@@ -39,7 +39,7 @@ async function deleteUser(req, res, next) {
     console.log(post);
 
     if (post.length !== 0) {
-      console.log("Hay posts relacionados");
+      console.log("There are related posts. / Hay posts relacionados.");
 
       //Borramos las imagenes relacionadas al post
       for (let index = 0; index < post.length; index++) {
@@ -92,7 +92,9 @@ async function deleteUser(req, res, next) {
         );
       }
     } else {
-      console.log("no hay post relacionados al usuario");
+      console.log(
+        "There are no posts related to the user. / No hay posts relacionados al usuario."
+      );
     }
 
     await connection.query(
@@ -109,7 +111,7 @@ async function deleteUser(req, res, next) {
 
     res.send({
       status: "ok",
-      message: `El usuario con id ${id} fue borrado`,
+      message: `User with id ${id} has been removed. / El usuario con id ${id} fue borrado`,
     });
   } catch (error) {
     next(error);

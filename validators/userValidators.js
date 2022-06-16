@@ -9,7 +9,7 @@ const newUserSchema = Joi.object().keys({
     .required()
     .error(
       generateError(
-        "Por favor introduce una dirección de correo válida / Please add a valid email address",
+        "Please add a valid email address. / Por favor introduce una dirección de correo válida.",
         400
       )
     ),
@@ -18,7 +18,7 @@ const newUserSchema = Joi.object().keys({
     .required()
     .error(
       generateError(
-        "La contraseña debe tener al menos 8 caracteres / Password must have at least 8 characters",
+        "Password must have at least 8 characters. / La contraseña debe tener al menos 8 caracteres.",
         400
       )
     ),
@@ -27,7 +27,7 @@ const newUserSchema = Joi.object().keys({
     .required()
     .error(
       generateError(
-        "El campo nombre de usuario no puede tener más de 25 caracteres y es obligatorio / The userName field can't have more than 25 characters and must have a value",
+        "The userName field can't have more than 25 characters and must have a value. / El campo nombre de usuario no puede tener más de 25 caracteres y es obligatorio.",
         400
       )
     ),
@@ -40,7 +40,7 @@ const editUserSchema = Joi.object().keys({
     .email()
     .error(
       generateError(
-        "Dirección de correo no valida / Please introduce a valid email address",
+        "Please introduce a valid email address. / Dirección de correo no valida.",
         400
       )
     ),
@@ -49,7 +49,7 @@ const editUserSchema = Joi.object().keys({
 
     .error(
       generateError(
-        "El campo nombre de usuario no puede tener más de 25 caracteres y es obligatorio / The userName field can't have more than 25 characters and must have a value",
+        "The userName field can't have more than 25 characters and must have a value. / El campo nombre de usuario no puede tener más de 25 caracteres y es obligatorio.",
         400
       )
     ),
@@ -57,7 +57,7 @@ const editUserSchema = Joi.object().keys({
     .max(20)
     .error(
       generateError(
-        "El campo nombre no puede tener más de 20 caracteres / The name field can't have more than 20 characters",
+        "The name field can't have more than 20 characters. / El campo nombre no puede tener más de 20 caracteres.",
         400
       )
     ),

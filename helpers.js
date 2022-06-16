@@ -32,7 +32,9 @@ async function processAndSaveImageProfile(uploadedImage, id) {
     isDir.isDirectory();
   } catch (error) {
     await fs.mkdir(imageUploadPath, { recursive: true });
-    console.error("Creada carpeta de almacenamiento de imagenes de perfil");
+    console.error(
+      "Folder for storing profile images created. / Creada carpeta de almacenamiento de imagenes de perfil."
+    );
   }
   const image = sharp(uploadedImage.data);
   const imageInfo = await image.metadata();
@@ -55,7 +57,9 @@ async function proccesImagesPost(uploadedImage) {
     isDir.isDirectory();
   } catch (error) {
     await fs.mkdir(imagePathPost, { recursive: true });
-    console.log("Creada carpeta de almacenamiento de posts");
+    console.log(
+      "Folder for storing posts created. / Creada carpeta de almacenamiento de posts."
+    );
   }
 
   const image = sharp(uploadedImage.data);

@@ -12,7 +12,7 @@ const newUser = async (req, res, next) => {
 
     if (resultEmailExist) {
       throw generateError(
-        "Ya existe un usuario en la base de datos con ese email",
+        "User with this email address already exists in the database. / Ya existe un usuario en la base de datos con ese correo electrónico.",
         409
       );
     }
@@ -23,7 +23,7 @@ const newUser = async (req, res, next) => {
 
     res.send({
       status: "ok",
-      message: "Usuario registrado.",
+      message: "User registered. / Usuario registrado.",
     });
   } catch (error) {
     next(error);

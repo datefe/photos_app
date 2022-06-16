@@ -24,7 +24,7 @@ async function newComment(req, res, next) {
 
     res.send({
       status: "ok",
-      message: "Comentario creado / Comment created",
+      message: "Comentario creado. / Comment created.",
       data: {
         id: result.id,
         post_id,

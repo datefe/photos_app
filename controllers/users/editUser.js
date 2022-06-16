@@ -21,7 +21,10 @@ const editUser = async (req, res, next) => {
     await editUserSchema.validateAsync(req.query);
 
     if (req.auth.userName !== userName && req.auth.role !== "admin") {
-      throw generateError("No tienes permisos para editar este usuario", 403);
+      throw generateError(
+        "You have no permissions to edit this user. / No tienes permisos para editar este usuario.",
+        403
+      );
     }
 
     const [saveData] = await existUser(userName);
@@ -71,15 +74,17 @@ const editUser = async (req, res, next) => {
         if (saveData.image && saveData.image !== processedImage) {
           await deleteUpload(saveData.image);
         }
-        result.profileImage = "se ha guardado la imagen correctamente";
+        result.profileImage =
+          "Image has been correctly saved. / La imagen se ha guardado correctamente.";
       } catch (error) {
         throw generateError(
-          "No se pudo procesar la imagen. Inténtalo de nuevo",
+          "Image could not be processed. Please try again. / No se pudo procesar la imagen. Inténtalo de nuevo.",
           400
         );
       }
     }
-    result.condition = "Datos actualizados correctamente";
+    result.condition =
+      "Data correctly updated. / Datos actualizados correctamente.";
     res.send({
       status: "ok",
       message: result,

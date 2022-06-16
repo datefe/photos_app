@@ -10,7 +10,7 @@ const newPostSchema = Joi.object().keys({
     .required()
     .error(
       generateError(
-        "Titulo debe existir y tener al menos un caracter / Title must exist and have at least one character",
+        "Title must exist and have at least one character. / Titulo debe existir y tener al menos un caracter.",
         400
       )
     ),
@@ -18,7 +18,7 @@ const newPostSchema = Joi.object().keys({
     .max(50)
     .error(
       generateError(
-        "Place debe existir y tener maximo 50 caracteres / Title must exist and have at least one character",
+        "Title must exist and have at least one character. / Place/Lugar debe existir y tener maximo 50 caracteres.",
         400
       )
     ),
@@ -31,7 +31,7 @@ const newImageSchema = Joi.object().keys({
     .required()
     .error(
       generateError(
-        "La cantidad de imagenes debe de ser entre 1 y 3 / The number of images must be between 1 and 3",
+        "The number of images must be between 1 and 3. / La cantidad de imágenes debe de ser entre 1 y 3.",
         400
       )
     ),

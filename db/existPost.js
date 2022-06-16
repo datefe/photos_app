@@ -16,7 +16,10 @@ const existPost = async (postId) => {
     );
 
     if (exist.length < 1) {
-      throw generateError(`No hay ningun post con el id:${postId}`, 404);
+      throw generateError(
+        `There is no post with id / No hay ningún post con el id:${postId}`,
+        404
+      );
     }
 
     return true;

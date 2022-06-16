@@ -11,7 +11,9 @@ async function isUser(req, res, next) {
     const { authorization } = req.headers;
 
     if (!authorization) {
-      const error = new Error("Falta la cabecera de autorización");
+      const error = new Error(
+        "Token is missing. / Falta la cabecera de autorización."
+      );
       error.httpStatus = 401;
       throw error;
     }
@@ -23,7 +25,9 @@ async function isUser(req, res, next) {
     try {
       tokenInfo = jsonwebtoken.verify(authorization, process.env.SECRET);
     } catch (error) {
-      const tokenError = new Error("El token no es válido");
+      const tokenError = new Error(
+        "The token is not valid. / El token no es válido."
+      );
       tokenError.httpStatus = 401;
       throw tokenError;
     }
@@ -40,7 +44,9 @@ async function isUser(req, res, next) {
     );
 
     if (result.length === 0) {
-      const error = new Error("El usuario no existe en la base de datos");
+      const error = new Error(
+        "User does not exist in the database. / El usuario no existe en la base de datos."
+      );
       error.httpStatus = 401;
       throw error;
     }
@@ -52,7 +58,7 @@ async function isUser(req, res, next) {
 
     if (tokenCreatedAt < userLastAuthUpdate) {
       const error = new Error(
-        "El token ya no es válido. Haz login para conseguir otro"
+        "The token has expired, please log in again. / El token ya no es válido. Haz login para conseguir otro."
       );
       error.httpStatus = 401;
       throw error;

@@ -44,11 +44,16 @@ const newPost = async (req, res, next) => {
 
     res.send({
       status: "ok",
-      message: "post creado",
+      message: "Post created. / Post creado.",
       postId: result.insertId,
     });
   } catch (error) {
-    next(generateError("No se pudo procesar el post. Inténtalo de nuevo", 400));
+    next(
+      generateError(
+        "Post could not be processed. Please try again. / No se pudo procesar el post. Inténtalo de nuevo",
+        400
+      )
+    );
   } finally {
     if (connection) connection.release();
   }

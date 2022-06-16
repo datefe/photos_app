@@ -2,7 +2,9 @@ async function isAdmin(req, res, next) {
   if (req.auth.role === "admin") {
     next();
   } else {
-    const error = new Error("No tienes privilegios de administración");
+    const error = new Error(
+      "You do not have admin access. / No tienes privilegios de administración."
+    );
     error.httpStatus = 403;
     next(error);
   }
